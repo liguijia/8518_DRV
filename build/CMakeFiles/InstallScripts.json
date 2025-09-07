@@ -1,8 +1,0 @@
-{
-	"InstallScripts" : 
-	[
-		"D:/Codes/8518_DRV_cmake/build/cmake_install.cmake",
-		"D:/Codes/8518_DRV_cmake/build/cmake/stm32cubemx/cmake_install.cmake"
-	],
-	"Parallel" : false
-}
