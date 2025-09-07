@@ -1,0 +1,236 @@
+[
+{
+  "directory": "D:/Codes/8518_DRV_cmake/build",
+  "command": "D:\\PROGRA~1\\Compiler\\ARM-GN~1.REL\\bin\\AR19DD~1.EXE -DSTM32G431xx -DUSE_HAL_DRIVER -ID:/Codes/8518_DRV_cmake/Core/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Device/ST/STM32G4xx/Include -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -Os -g0 -std=gnu11 -o CMakeFiles\\8518_DRV.dir\\Core\\Src\\main.c.obj -c D:\\Codes\\8518_DRV_cmake\\Core\\Src\\main.c",
+  "file": "D:/Codes/8518_DRV_cmake/Core/Src/main.c",
+  "output": "D:/Codes/8518_DRV_cmake/build/CMakeFiles/8518_DRV.dir/Core/Src/main.c.obj"
+},
+{
+  "directory": "D:/Codes/8518_DRV_cmake/build",
+  "command": "D:\\PROGRA~1\\Compiler\\ARM-GN~1.REL\\bin\\AR19DD~1.EXE -DSTM32G431xx -DUSE_HAL_DRIVER -ID:/Codes/8518_DRV_cmake/Core/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Device/ST/STM32G4xx/Include -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -Os -g0 -std=gnu11 -o CMakeFiles\\8518_DRV.dir\\Core\\Src\\gpio.c.obj -c D:\\Codes\\8518_DRV_cmake\\Core\\Src\\gpio.c",
+  "file": "D:/Codes/8518_DRV_cmake/Core/Src/gpio.c",
+  "output": "D:/Codes/8518_DRV_cmake/build/CMakeFiles/8518_DRV.dir/Core/Src/gpio.c.obj"
+},
+{
+  "directory": "D:/Codes/8518_DRV_cmake/build",
+  "command": "D:\\PROGRA~1\\Compiler\\ARM-GN~1.REL\\bin\\AR19DD~1.EXE -DSTM32G431xx -DUSE_HAL_DRIVER -ID:/Codes/8518_DRV_cmake/Core/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Device/ST/STM32G4xx/Include -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -Os -g0 -std=gnu11 -o CMakeFiles\\8518_DRV.dir\\Core\\Src\\adc.c.obj -c D:\\Codes\\8518_DRV_cmake\\Core\\Src\\adc.c",
+  "file": "D:/Codes/8518_DRV_cmake/Core/Src/adc.c",
+  "output": "D:/Codes/8518_DRV_cmake/build/CMakeFiles/8518_DRV.dir/Core/Src/adc.c.obj"
+},
+{
+  "directory": "D:/Codes/8518_DRV_cmake/build",
+  "command": "D:\\PROGRA~1\\Compiler\\ARM-GN~1.REL\\bin\\AR19DD~1.EXE -DSTM32G431xx -DUSE_HAL_DRIVER -ID:/Codes/8518_DRV_cmake/Core/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Device/ST/STM32G4xx/Include -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -Os -g0 -std=gnu11 -o CMakeFiles\\8518_DRV.dir\\Core\\Src\\dac.c.obj -c D:\\Codes\\8518_DRV_cmake\\Core\\Src\\dac.c",
+  "file": "D:/Codes/8518_DRV_cmake/Core/Src/dac.c",
+  "output": "D:/Codes/8518_DRV_cmake/build/CMakeFiles/8518_DRV.dir/Core/Src/dac.c.obj"
+},
+{
+  "directory": "D:/Codes/8518_DRV_cmake/build",
+  "command": "D:\\PROGRA~1\\Compiler\\ARM-GN~1.REL\\bin\\AR19DD~1.EXE -DSTM32G431xx -DUSE_HAL_DRIVER -ID:/Codes/8518_DRV_cmake/Core/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Device/ST/STM32G4xx/Include -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -Os -g0 -std=gnu11 -o CMakeFiles\\8518_DRV.dir\\Core\\Src\\fdcan.c.obj -c D:\\Codes\\8518_DRV_cmake\\Core\\Src\\fdcan.c",
+  "file": "D:/Codes/8518_DRV_cmake/Core/Src/fdcan.c",
+  "output": "D:/Codes/8518_DRV_cmake/build/CMakeFiles/8518_DRV.dir/Core/Src/fdcan.c.obj"
+},
+{
+  "directory": "D:/Codes/8518_DRV_cmake/build",
+  "command": "D:\\PROGRA~1\\Compiler\\ARM-GN~1.REL\\bin\\AR19DD~1.EXE -DSTM32G431xx -DUSE_HAL_DRIVER -ID:/Codes/8518_DRV_cmake/Core/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Device/ST/STM32G4xx/Include -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -Os -g0 -std=gnu11 -o CMakeFiles\\8518_DRV.dir\\Core\\Src\\spi.c.obj -c D:\\Codes\\8518_DRV_cmake\\Core\\Src\\spi.c",
+  "file": "D:/Codes/8518_DRV_cmake/Core/Src/spi.c",
+  "output": "D:/Codes/8518_DRV_cmake/build/CMakeFiles/8518_DRV.dir/Core/Src/spi.c.obj"
+},
+{
+  "directory": "D:/Codes/8518_DRV_cmake/build",
+  "command": "D:\\PROGRA~1\\Compiler\\ARM-GN~1.REL\\bin\\AR19DD~1.EXE -DSTM32G431xx -DUSE_HAL_DRIVER -ID:/Codes/8518_DRV_cmake/Core/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Device/ST/STM32G4xx/Include -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -Os -g0 -std=gnu11 -o CMakeFiles\\8518_DRV.dir\\Core\\Src\\tim.c.obj -c D:\\Codes\\8518_DRV_cmake\\Core\\Src\\tim.c",
+  "file": "D:/Codes/8518_DRV_cmake/Core/Src/tim.c",
+  "output": "D:/Codes/8518_DRV_cmake/build/CMakeFiles/8518_DRV.dir/Core/Src/tim.c.obj"
+},
+{
+  "directory": "D:/Codes/8518_DRV_cmake/build",
+  "command": "D:\\PROGRA~1\\Compiler\\ARM-GN~1.REL\\bin\\AR19DD~1.EXE -DSTM32G431xx -DUSE_HAL_DRIVER -ID:/Codes/8518_DRV_cmake/Core/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Device/ST/STM32G4xx/Include -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -Os -g0 -std=gnu11 -o CMakeFiles\\8518_DRV.dir\\Core\\Src\\usart.c.obj -c D:\\Codes\\8518_DRV_cmake\\Core\\Src\\usart.c",
+  "file": "D:/Codes/8518_DRV_cmake/Core/Src/usart.c",
+  "output": "D:/Codes/8518_DRV_cmake/build/CMakeFiles/8518_DRV.dir/Core/Src/usart.c.obj"
+},
+{
+  "directory": "D:/Codes/8518_DRV_cmake/build",
+  "command": "D:\\PROGRA~1\\Compiler\\ARM-GN~1.REL\\bin\\AR19DD~1.EXE -DSTM32G431xx -DUSE_HAL_DRIVER -ID:/Codes/8518_DRV_cmake/Core/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Device/ST/STM32G4xx/Include -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -Os -g0 -std=gnu11 -o CMakeFiles\\8518_DRV.dir\\Core\\Src\\stm32g4xx_it.c.obj -c D:\\Codes\\8518_DRV_cmake\\Core\\Src\\stm32g4xx_it.c",
+  "file": "D:/Codes/8518_DRV_cmake/Core/Src/stm32g4xx_it.c",
+  "output": "D:/Codes/8518_DRV_cmake/build/CMakeFiles/8518_DRV.dir/Core/Src/stm32g4xx_it.c.obj"
+},
+{
+  "directory": "D:/Codes/8518_DRV_cmake/build",
+  "command": "D:\\PROGRA~1\\Compiler\\ARM-GN~1.REL\\bin\\AR19DD~1.EXE -DSTM32G431xx -DUSE_HAL_DRIVER -ID:/Codes/8518_DRV_cmake/Core/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Device/ST/STM32G4xx/Include -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -Os -g0 -std=gnu11 -o CMakeFiles\\8518_DRV.dir\\Core\\Src\\stm32g4xx_hal_msp.c.obj -c D:\\Codes\\8518_DRV_cmake\\Core\\Src\\stm32g4xx_hal_msp.c",
+  "file": "D:/Codes/8518_DRV_cmake/Core/Src/stm32g4xx_hal_msp.c",
+  "output": "D:/Codes/8518_DRV_cmake/build/CMakeFiles/8518_DRV.dir/Core/Src/stm32g4xx_hal_msp.c.obj"
+},
+{
+  "directory": "D:/Codes/8518_DRV_cmake/build",
+  "command": "D:\\PROGRA~1\\Compiler\\ARM-GN~1.REL\\bin\\AR19DD~1.EXE -DSTM32G431xx -DUSE_HAL_DRIVER -ID:/Codes/8518_DRV_cmake/Core/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Device/ST/STM32G4xx/Include -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -Os -g0 -std=gnu11 -o CMakeFiles\\8518_DRV.dir\\Core\\Src\\sysmem.c.obj -c D:\\Codes\\8518_DRV_cmake\\Core\\Src\\sysmem.c",
+  "file": "D:/Codes/8518_DRV_cmake/Core/Src/sysmem.c",
+  "output": "D:/Codes/8518_DRV_cmake/build/CMakeFiles/8518_DRV.dir/Core/Src/sysmem.c.obj"
+},
+{
+  "directory": "D:/Codes/8518_DRV_cmake/build",
+  "command": "D:\\PROGRA~1\\Compiler\\ARM-GN~1.REL\\bin\\AR19DD~1.EXE -DSTM32G431xx -DUSE_HAL_DRIVER -ID:/Codes/8518_DRV_cmake/Core/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Device/ST/STM32G4xx/Include -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -Os -g0 -std=gnu11 -o CMakeFiles\\8518_DRV.dir\\Core\\Src\\syscalls.c.obj -c D:\\Codes\\8518_DRV_cmake\\Core\\Src\\syscalls.c",
+  "file": "D:/Codes/8518_DRV_cmake/Core/Src/syscalls.c",
+  "output": "D:/Codes/8518_DRV_cmake/build/CMakeFiles/8518_DRV.dir/Core/Src/syscalls.c.obj"
+},
+{
+  "directory": "D:/Codes/8518_DRV_cmake/build",
+  "command": "D:\\PROGRA~1\\Compiler\\ARM-GN~1.REL\\bin\\AR19DD~1.EXE -DSTM32G431xx -DUSE_HAL_DRIVER -ID:/Codes/8518_DRV_cmake/Core/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Device/ST/STM32G4xx/Include -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -x assembler-with-cpp -MMD -MP -O3 -DNDEBUG -o CMakeFiles\\8518_DRV.dir\\startup_stm32g431xx.s.obj -c D:\\Codes\\8518_DRV_cmake\\startup_stm32g431xx.s",
+  "file": "D:/Codes/8518_DRV_cmake/startup_stm32g431xx.s",
+  "output": "D:/Codes/8518_DRV_cmake/build/CMakeFiles/8518_DRV.dir/startup_stm32g431xx.s.obj"
+},
+{
+  "directory": "D:/Codes/8518_DRV_cmake/build",
+  "command": "D:\\PROGRA~1\\Compiler\\ARM-GN~1.REL\\bin\\AR19DD~1.EXE -DSTM32G431xx -DUSE_HAL_DRIVER -ID:/Codes/8518_DRV_cmake/Core/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Device/ST/STM32G4xx/Include -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -Os -g0 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Core\\Src\\system_stm32g4xx.c.obj -c D:\\Codes\\8518_DRV_cmake\\Core\\Src\\system_stm32g4xx.c",
+  "file": "D:/Codes/8518_DRV_cmake/Core/Src/system_stm32g4xx.c",
+  "output": "D:/Codes/8518_DRV_cmake/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32g4xx.c.obj"
+},
+{
+  "directory": "D:/Codes/8518_DRV_cmake/build",
+  "command": "D:\\PROGRA~1\\Compiler\\ARM-GN~1.REL\\bin\\AR19DD~1.EXE -DSTM32G431xx -DUSE_HAL_DRIVER -ID:/Codes/8518_DRV_cmake/Core/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Device/ST/STM32G4xx/Include -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -Os -g0 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32G4xx_HAL_Driver\\Src\\stm32g4xx_hal_adc.c.obj -c D:\\Codes\\8518_DRV_cmake\\Drivers\\STM32G4xx_HAL_Driver\\Src\\stm32g4xx_hal_adc.c",
+  "file": "D:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc.c",
+  "output": "D:/Codes/8518_DRV_cmake/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc.c.obj"
+},
+{
+  "directory": "D:/Codes/8518_DRV_cmake/build",
+  "command": "D:\\PROGRA~1\\Compiler\\ARM-GN~1.REL\\bin\\AR19DD~1.EXE -DSTM32G431xx -DUSE_HAL_DRIVER -ID:/Codes/8518_DRV_cmake/Core/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Device/ST/STM32G4xx/Include -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -Os -g0 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32G4xx_HAL_Driver\\Src\\stm32g4xx_hal_adc_ex.c.obj -c D:\\Codes\\8518_DRV_cmake\\Drivers\\STM32G4xx_HAL_Driver\\Src\\stm32g4xx_hal_adc_ex.c",
+  "file": "D:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc_ex.c",
+  "output": "D:/Codes/8518_DRV_cmake/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc_ex.c.obj"
+},
+{
+  "directory": "D:/Codes/8518_DRV_cmake/build",
+  "command": "D:\\PROGRA~1\\Compiler\\ARM-GN~1.REL\\bin\\AR19DD~1.EXE -DSTM32G431xx -DUSE_HAL_DRIVER -ID:/Codes/8518_DRV_cmake/Core/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Device/ST/STM32G4xx/Include -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -Os -g0 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32G4xx_HAL_Driver\\Src\\stm32g4xx_ll_adc.c.obj -c D:\\Codes\\8518_DRV_cmake\\Drivers\\STM32G4xx_HAL_Driver\\Src\\stm32g4xx_ll_adc.c",
+  "file": "D:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_adc.c",
+  "output": "D:/Codes/8518_DRV_cmake/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_adc.c.obj"
+},
+{
+  "directory": "D:/Codes/8518_DRV_cmake/build",
+  "command": "D:\\PROGRA~1\\Compiler\\ARM-GN~1.REL\\bin\\AR19DD~1.EXE -DSTM32G431xx -DUSE_HAL_DRIVER -ID:/Codes/8518_DRV_cmake/Core/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Device/ST/STM32G4xx/Include -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -Os -g0 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32G4xx_HAL_Driver\\Src\\stm32g4xx_hal.c.obj -c D:\\Codes\\8518_DRV_cmake\\Drivers\\STM32G4xx_HAL_Driver\\Src\\stm32g4xx_hal.c",
+  "file": "D:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.c",
+  "output": "D:/Codes/8518_DRV_cmake/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.c.obj"
+},
+{
+  "directory": "D:/Codes/8518_DRV_cmake/build",
+  "command": "D:\\PROGRA~1\\Compiler\\ARM-GN~1.REL\\bin\\AR19DD~1.EXE -DSTM32G431xx -DUSE_HAL_DRIVER -ID:/Codes/8518_DRV_cmake/Core/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Device/ST/STM32G4xx/Include -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -Os -g0 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32G4xx_HAL_Driver\\Src\\stm32g4xx_hal_rcc.c.obj -c D:\\Codes\\8518_DRV_cmake\\Drivers\\STM32G4xx_HAL_Driver\\Src\\stm32g4xx_hal_rcc.c",
+  "file": "D:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc.c",
+  "output": "D:/Codes/8518_DRV_cmake/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc.c.obj"
+},
+{
+  "directory": "D:/Codes/8518_DRV_cmake/build",
+  "command": "D:\\PROGRA~1\\Compiler\\ARM-GN~1.REL\\bin\\AR19DD~1.EXE -DSTM32G431xx -DUSE_HAL_DRIVER -ID:/Codes/8518_DRV_cmake/Core/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Device/ST/STM32G4xx/Include -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -Os -g0 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32G4xx_HAL_Driver\\Src\\stm32g4xx_hal_rcc_ex.c.obj -c D:\\Codes\\8518_DRV_cmake\\Drivers\\STM32G4xx_HAL_Driver\\Src\\stm32g4xx_hal_rcc_ex.c",
+  "file": "D:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc_ex.c",
+  "output": "D:/Codes/8518_DRV_cmake/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc_ex.c.obj"
+},
+{
+  "directory": "D:/Codes/8518_DRV_cmake/build",
+  "command": "D:\\PROGRA~1\\Compiler\\ARM-GN~1.REL\\bin\\AR19DD~1.EXE -DSTM32G431xx -DUSE_HAL_DRIVER -ID:/Codes/8518_DRV_cmake/Core/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Device/ST/STM32G4xx/Include -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -Os -g0 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32G4xx_HAL_Driver\\Src\\stm32g4xx_hal_flash.c.obj -c D:\\Codes\\8518_DRV_cmake\\Drivers\\STM32G4xx_HAL_Driver\\Src\\stm32g4xx_hal_flash.c",
+  "file": "D:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash.c",
+  "output": "D:/Codes/8518_DRV_cmake/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash.c.obj"
+},
+{
+  "directory": "D:/Codes/8518_DRV_cmake/build",
+  "command": "D:\\PROGRA~1\\Compiler\\ARM-GN~1.REL\\bin\\AR19DD~1.EXE -DSTM32G431xx -DUSE_HAL_DRIVER -ID:/Codes/8518_DRV_cmake/Core/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Device/ST/STM32G4xx/Include -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -Os -g0 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32G4xx_HAL_Driver\\Src\\stm32g4xx_hal_flash_ex.c.obj -c D:\\Codes\\8518_DRV_cmake\\Drivers\\STM32G4xx_HAL_Driver\\Src\\stm32g4xx_hal_flash_ex.c",
+  "file": "D:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ex.c",
+  "output": "D:/Codes/8518_DRV_cmake/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ex.c.obj"
+},
+{
+  "directory": "D:/Codes/8518_DRV_cmake/build",
+  "command": "D:\\PROGRA~1\\Compiler\\ARM-GN~1.REL\\bin\\AR19DD~1.EXE -DSTM32G431xx -DUSE_HAL_DRIVER -ID:/Codes/8518_DRV_cmake/Core/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Device/ST/STM32G4xx/Include -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -Os -g0 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32G4xx_HAL_Driver\\Src\\stm32g4xx_hal_flash_ramfunc.c.obj -c D:\\Codes\\8518_DRV_cmake\\Drivers\\STM32G4xx_HAL_Driver\\Src\\stm32g4xx_hal_flash_ramfunc.c",
+  "file": "D:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ramfunc.c",
+  "output": "D:/Codes/8518_DRV_cmake/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ramfunc.c.obj"
+},
+{
+  "directory": "D:/Codes/8518_DRV_cmake/build",
+  "command": "D:\\PROGRA~1\\Compiler\\ARM-GN~1.REL\\bin\\AR19DD~1.EXE -DSTM32G431xx -DUSE_HAL_DRIVER -ID:/Codes/8518_DRV_cmake/Core/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Device/ST/STM32G4xx/Include -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -Os -g0 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32G4xx_HAL_Driver\\Src\\stm32g4xx_hal_gpio.c.obj -c D:\\Codes\\8518_DRV_cmake\\Drivers\\STM32G4xx_HAL_Driver\\Src\\stm32g4xx_hal_gpio.c",
+  "file": "D:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_gpio.c",
+  "output": "D:/Codes/8518_DRV_cmake/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_gpio.c.obj"
+},
+{
+  "directory": "D:/Codes/8518_DRV_cmake/build",
+  "command": "D:\\PROGRA~1\\Compiler\\ARM-GN~1.REL\\bin\\AR19DD~1.EXE -DSTM32G431xx -DUSE_HAL_DRIVER -ID:/Codes/8518_DRV_cmake/Core/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Device/ST/STM32G4xx/Include -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -Os -g0 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32G4xx_HAL_Driver\\Src\\stm32g4xx_hal_exti.c.obj -c D:\\Codes\\8518_DRV_cmake\\Drivers\\STM32G4xx_HAL_Driver\\Src\\stm32g4xx_hal_exti.c",
+  "file": "D:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_exti.c",
+  "output": "D:/Codes/8518_DRV_cmake/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_exti.c.obj"
+},
+{
+  "directory": "D:/Codes/8518_DRV_cmake/build",
+  "command": "D:\\PROGRA~1\\Compiler\\ARM-GN~1.REL\\bin\\AR19DD~1.EXE -DSTM32G431xx -DUSE_HAL_DRIVER -ID:/Codes/8518_DRV_cmake/Core/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Device/ST/STM32G4xx/Include -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -Os -g0 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32G4xx_HAL_Driver\\Src\\stm32g4xx_hal_dma.c.obj -c D:\\Codes\\8518_DRV_cmake\\Drivers\\STM32G4xx_HAL_Driver\\Src\\stm32g4xx_hal_dma.c",
+  "file": "D:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma.c",
+  "output": "D:/Codes/8518_DRV_cmake/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma.c.obj"
+},
+{
+  "directory": "D:/Codes/8518_DRV_cmake/build",
+  "command": "D:\\PROGRA~1\\Compiler\\ARM-GN~1.REL\\bin\\AR19DD~1.EXE -DSTM32G431xx -DUSE_HAL_DRIVER -ID:/Codes/8518_DRV_cmake/Core/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Device/ST/STM32G4xx/Include -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -Os -g0 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32G4xx_HAL_Driver\\Src\\stm32g4xx_hal_dma_ex.c.obj -c D:\\Codes\\8518_DRV_cmake\\Drivers\\STM32G4xx_HAL_Driver\\Src\\stm32g4xx_hal_dma_ex.c",
+  "file": "D:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma_ex.c",
+  "output": "D:/Codes/8518_DRV_cmake/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma_ex.c.obj"
+},
+{
+  "directory": "D:/Codes/8518_DRV_cmake/build",
+  "command": "D:\\PROGRA~1\\Compiler\\ARM-GN~1.REL\\bin\\AR19DD~1.EXE -DSTM32G431xx -DUSE_HAL_DRIVER -ID:/Codes/8518_DRV_cmake/Core/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Device/ST/STM32G4xx/Include -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -Os -g0 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32G4xx_HAL_Driver\\Src\\stm32g4xx_hal_pwr.c.obj -c D:\\Codes\\8518_DRV_cmake\\Drivers\\STM32G4xx_HAL_Driver\\Src\\stm32g4xx_hal_pwr.c",
+  "file": "D:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr.c",
+  "output": "D:/Codes/8518_DRV_cmake/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr.c.obj"
+},
+{
+  "directory": "D:/Codes/8518_DRV_cmake/build",
+  "command": "D:\\PROGRA~1\\Compiler\\ARM-GN~1.REL\\bin\\AR19DD~1.EXE -DSTM32G431xx -DUSE_HAL_DRIVER -ID:/Codes/8518_DRV_cmake/Core/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Device/ST/STM32G4xx/Include -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -Os -g0 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32G4xx_HAL_Driver\\Src\\stm32g4xx_hal_pwr_ex.c.obj -c D:\\Codes\\8518_DRV_cmake\\Drivers\\STM32G4xx_HAL_Driver\\Src\\stm32g4xx_hal_pwr_ex.c",
+  "file": "D:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr_ex.c",
+  "output": "D:/Codes/8518_DRV_cmake/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr_ex.c.obj"
+},
+{
+  "directory": "D:/Codes/8518_DRV_cmake/build",
+  "command": "D:\\PROGRA~1\\Compiler\\ARM-GN~1.REL\\bin\\AR19DD~1.EXE -DSTM32G431xx -DUSE_HAL_DRIVER -ID:/Codes/8518_DRV_cmake/Core/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Device/ST/STM32G4xx/Include -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -Os -g0 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32G4xx_HAL_Driver\\Src\\stm32g4xx_hal_cortex.c.obj -c D:\\Codes\\8518_DRV_cmake\\Drivers\\STM32G4xx_HAL_Driver\\Src\\stm32g4xx_hal_cortex.c",
+  "file": "D:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_cortex.c",
+  "output": "D:/Codes/8518_DRV_cmake/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_cortex.c.obj"
+},
+{
+  "directory": "D:/Codes/8518_DRV_cmake/build",
+  "command": "D:\\PROGRA~1\\Compiler\\ARM-GN~1.REL\\bin\\AR19DD~1.EXE -DSTM32G431xx -DUSE_HAL_DRIVER -ID:/Codes/8518_DRV_cmake/Core/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Device/ST/STM32G4xx/Include -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -Os -g0 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32G4xx_HAL_Driver\\Src\\stm32g4xx_hal_dac.c.obj -c D:\\Codes\\8518_DRV_cmake\\Drivers\\STM32G4xx_HAL_Driver\\Src\\stm32g4xx_hal_dac.c",
+  "file": "D:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dac.c",
+  "output": "D:/Codes/8518_DRV_cmake/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dac.c.obj"
+},
+{
+  "directory": "D:/Codes/8518_DRV_cmake/build",
+  "command": "D:\\PROGRA~1\\Compiler\\ARM-GN~1.REL\\bin\\AR19DD~1.EXE -DSTM32G431xx -DUSE_HAL_DRIVER -ID:/Codes/8518_DRV_cmake/Core/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Device/ST/STM32G4xx/Include -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -Os -g0 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32G4xx_HAL_Driver\\Src\\stm32g4xx_hal_dac_ex.c.obj -c D:\\Codes\\8518_DRV_cmake\\Drivers\\STM32G4xx_HAL_Driver\\Src\\stm32g4xx_hal_dac_ex.c",
+  "file": "D:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dac_ex.c",
+  "output": "D:/Codes/8518_DRV_cmake/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dac_ex.c.obj"
+},
+{
+  "directory": "D:/Codes/8518_DRV_cmake/build",
+  "command": "D:\\PROGRA~1\\Compiler\\ARM-GN~1.REL\\bin\\AR19DD~1.EXE -DSTM32G431xx -DUSE_HAL_DRIVER -ID:/Codes/8518_DRV_cmake/Core/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Device/ST/STM32G4xx/Include -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -Os -g0 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32G4xx_HAL_Driver\\Src\\stm32g4xx_hal_fdcan.c.obj -c D:\\Codes\\8518_DRV_cmake\\Drivers\\STM32G4xx_HAL_Driver\\Src\\stm32g4xx_hal_fdcan.c",
+  "file": "D:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_fdcan.c",
+  "output": "D:/Codes/8518_DRV_cmake/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_fdcan.c.obj"
+},
+{
+  "directory": "D:/Codes/8518_DRV_cmake/build",
+  "command": "D:\\PROGRA~1\\Compiler\\ARM-GN~1.REL\\bin\\AR19DD~1.EXE -DSTM32G431xx -DUSE_HAL_DRIVER -ID:/Codes/8518_DRV_cmake/Core/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Device/ST/STM32G4xx/Include -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -Os -g0 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32G4xx_HAL_Driver\\Src\\stm32g4xx_hal_spi.c.obj -c D:\\Codes\\8518_DRV_cmake\\Drivers\\STM32G4xx_HAL_Driver\\Src\\stm32g4xx_hal_spi.c",
+  "file": "D:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_spi.c",
+  "output": "D:/Codes/8518_DRV_cmake/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_spi.c.obj"
+},
+{
+  "directory": "D:/Codes/8518_DRV_cmake/build",
+  "command": "D:\\PROGRA~1\\Compiler\\ARM-GN~1.REL\\bin\\AR19DD~1.EXE -DSTM32G431xx -DUSE_HAL_DRIVER -ID:/Codes/8518_DRV_cmake/Core/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Device/ST/STM32G4xx/Include -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -Os -g0 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32G4xx_HAL_Driver\\Src\\stm32g4xx_hal_spi_ex.c.obj -c D:\\Codes\\8518_DRV_cmake\\Drivers\\STM32G4xx_HAL_Driver\\Src\\stm32g4xx_hal_spi_ex.c",
+  "file": "D:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_spi_ex.c",
+  "output": "D:/Codes/8518_DRV_cmake/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_spi_ex.c.obj"
+},
+{
+  "directory": "D:/Codes/8518_DRV_cmake/build",
+  "command": "D:\\PROGRA~1\\Compiler\\ARM-GN~1.REL\\bin\\AR19DD~1.EXE -DSTM32G431xx -DUSE_HAL_DRIVER -ID:/Codes/8518_DRV_cmake/Core/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Device/ST/STM32G4xx/Include -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -Os -g0 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32G4xx_HAL_Driver\\Src\\stm32g4xx_hal_tim.c.obj -c D:\\Codes\\8518_DRV_cmake\\Drivers\\STM32G4xx_HAL_Driver\\Src\\stm32g4xx_hal_tim.c",
+  "file": "D:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim.c",
+  "output": "D:/Codes/8518_DRV_cmake/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim.c.obj"
+},
+{
+  "directory": "D:/Codes/8518_DRV_cmake/build",
+  "command": "D:\\PROGRA~1\\Compiler\\ARM-GN~1.REL\\bin\\AR19DD~1.EXE -DSTM32G431xx -DUSE_HAL_DRIVER -ID:/Codes/8518_DRV_cmake/Core/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Device/ST/STM32G4xx/Include -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -Os -g0 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32G4xx_HAL_Driver\\Src\\stm32g4xx_hal_tim_ex.c.obj -c D:\\Codes\\8518_DRV_cmake\\Drivers\\STM32G4xx_HAL_Driver\\Src\\stm32g4xx_hal_tim_ex.c",
+  "file": "D:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim_ex.c",
+  "output": "D:/Codes/8518_DRV_cmake/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim_ex.c.obj"
+},
+{
+  "directory": "D:/Codes/8518_DRV_cmake/build",
+  "command": "D:\\PROGRA~1\\Compiler\\ARM-GN~1.REL\\bin\\AR19DD~1.EXE -DSTM32G431xx -DUSE_HAL_DRIVER -ID:/Codes/8518_DRV_cmake/Core/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Device/ST/STM32G4xx/Include -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -Os -g0 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32G4xx_HAL_Driver\\Src\\stm32g4xx_hal_uart.c.obj -c D:\\Codes\\8518_DRV_cmake\\Drivers\\STM32G4xx_HAL_Driver\\Src\\stm32g4xx_hal_uart.c",
+  "file": "D:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart.c",
+  "output": "D:/Codes/8518_DRV_cmake/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart.c.obj"
+},
+{
+  "directory": "D:/Codes/8518_DRV_cmake/build",
+  "command": "D:\\PROGRA~1\\Compiler\\ARM-GN~1.REL\\bin\\AR19DD~1.EXE -DSTM32G431xx -DUSE_HAL_DRIVER -ID:/Codes/8518_DRV_cmake/Core/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc -ID:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Device/ST/STM32G4xx/Include -ID:/Codes/8518_DRV_cmake/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -Os -g0 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32G4xx_HAL_Driver\\Src\\stm32g4xx_hal_uart_ex.c.obj -c D:\\Codes\\8518_DRV_cmake\\Drivers\\STM32G4xx_HAL_Driver\\Src\\stm32g4xx_hal_uart_ex.c",
+  "file": "D:/Codes/8518_DRV_cmake/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart_ex.c",
+  "output": "D:/Codes/8518_DRV_cmake/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart_ex.c.obj"
+}
+]

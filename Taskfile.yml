@@ -1,0 +1,37 @@
+# https://taskfile.dev
+version: '3'
+
+vars:
+  BUILD_DIR: build
+
+tasks:
+  # 默认任务
+  default:
+    cmds:
+      - task: build
+
+  # 清理：调用 cmake 的 clean target
+  clean:
+    desc: "Clean build files using cmake"
+    cmds:
+      - cmake --build {{.BUILD_DIR}} --target clean || true
+
+  # 配置：生成 build 目录和 Ninja 构建文件
+  configure:
+    desc: "Run cmake configure"
+    cmds:
+      - cmake -B {{.BUILD_DIR}} -G Ninja
+
+  # 编译
+  build:
+    desc: "Build project"
+    deps: [configure]
+    cmds:
+      - cmake --build {{.BUILD_DIR}} -j
+
+  # 完整重建：先 clean 再 build
+  rebuild:
+    desc: "Clean and rebuild project"
+    deps: [clean]
+    cmds:
+      - task: build
