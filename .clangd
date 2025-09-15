@@ -1,5 +1,4 @@
 CompileFlags:
   Add: 
     - --target=arm-none-eabi
-
-    
+    - -IC:/Users/Kaiser/scoop/apps/gcc-arm-none-eabi/current/arm-none-eabi/include
