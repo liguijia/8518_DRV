@@ -5,10 +5,6 @@ vars:
   BUILD_DIR: build
 
 tasks:
-  # 默认任务
-  default:
-    cmds:
-      - task: build
 
   # 清理：调用 cmake 的 clean target
   clean:
@@ -35,3 +31,11 @@ tasks:
     deps: [clean]
     cmds:
       - task: build
+
+  flash:
+    desc: "Flash ELF to target using J-Link"
+    cmds:
+      - '"D:\SEGGER\JLink_V840\JLink.exe" -device STM32G431CB -if SWD -speed 4000 -autoconnect 1 -CommanderScript flash.jlink'
+    # 永远执行，不检查时间戳
+    status: ["false"]
+

@@ -1,0 +1,25 @@
+# 忽略 build 和 cache 目录
+/build/
+/build*/
+/.cache/
+/.cache*/
+
+# 忽略 CMake 生成的文件
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+CTestTestfile.cmake
+Testing/
+Makefile
+
+# 忽略 Ninja 生成的文件
+*.ninja
+.ninja_deps
+.ninja_log
+
+# 忽略编译产物
+*.elf
+*.bin
+*.hex
+*.map
+*.lst

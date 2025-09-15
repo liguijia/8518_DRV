@@ -1,0 +1,11 @@
+device STM32G431CB
+if SWD
+speed 4000
+connect
+
+h              
+erase         
+loadfile build/8518_DRV.hex
+r              
+g             
+exit

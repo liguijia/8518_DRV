@@ -57,12 +57,12 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define TIM1_ARR 8000-1
+#define TIM3_ARR 10000-1
 #define SPI1_CS_Pin GPIO_PIN_4
 #define SPI1_CS_GPIO_Port GPIOC
 #define LED_Pin GPIO_PIN_0
 #define LED_GPIO_Port GPIOB
-#define DRV12V_EN_Pin GPIO_PIN_11
-#define DRV12V_EN_GPIO_Port GPIOB
 #define SPI3_CS_Pin GPIO_PIN_12
 #define SPI3_CS_GPIO_Port GPIOB
 #define CAN_RES_EN_Pin GPIO_PIN_9
