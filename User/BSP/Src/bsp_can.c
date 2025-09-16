@@ -2,7 +2,7 @@
 #include "fdcan.h"
 #include "main.h"
 #include "string.h"
-//
+// USER
 #include "bsp_can.h"
 void BSP_FDCAN_SetRes(CAN_RES_STATUS status) {
   if (status == CAN_RES_ON) {
@@ -78,7 +78,6 @@ void BSP_FDCAN_SendMsg(uint16_t id, uint8_t *tx_data) {
   Can1_Txheader.Identifier = id;
   HAL_FDCAN_AddMessageToTxFifoQ(Can1TxFrame.hcan, &Can1_Txheader, tx_data);
 }
-
 /* ---------- FDCAN1 接收中断及回调 ---------- */
 static void FDCAN1_RxFifo0RxHandler(uint32_t *StdId, uint8_t Data[8]) {
   if ((*StdId) >= 0x201 && (*StdId) <= 0x208) {

@@ -29,6 +29,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "bsp_adc.h"
 #include "bsp_can.h"
 #include "bsp_led.h"
 #include "bsp_pwm.h"
@@ -111,17 +112,18 @@ int main(void)
   BSP_PWM_Init();
   BSP_BreathLED_Init();
   BSP_FDCAN_Init();
+  BSP_ADC_Init();
   uint8_t tx_data[8] = {1, 1, 4, 5, 1, 4, 0, 0};
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1) {
-    HAL_Delay(100);
+    HAL_Delay(50);
     BSP_LED_Status(LED_ON);
-    HAL_Delay(100);
+    HAL_Delay(50);
     BSP_LED_Status(LED_OFF);
-    BSP_FDCAN_SendMsg(114, tx_data);
+    BSP_FDCAN_SendMsg(0x114, tx_data);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
