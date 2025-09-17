@@ -78,8 +78,10 @@ void ADC1_ConvCpltCallback(void) {
 void ADC2_ConvCpltCallback(void) {
   mean_filter_update(&temp_ntc1, ADC2_REG(0));
   mean_filter_update(&temp_ntc2, ADC2_REG(1));
-  analogdata.temp.ntc1 = get_mapped_value(&temp_mcu, &adc_cali_array.temp_ntc1);
-  analogdata.temp.ntc2 = get_mapped_value(&temp_mcu, &adc_cali_array.temp_ntc2);
+  analogdata.temp.ntc1 =
+      get_mapped_value(&temp_ntc1, &adc_cali_array.temp_ntc1);
+  analogdata.temp.ntc2 =
+      get_mapped_value(&temp_ntc2, &adc_cali_array.temp_ntc2);
 }
 // 读取并处理  ADC1 注入组数据
 void ADC1_InjectedConvCpltCallback(void) {

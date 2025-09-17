@@ -33,7 +33,7 @@
 #include "bsp_can.h"
 #include "bsp_led.h"
 #include "bsp_pwm.h"
-
+#include "foc_openloop.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -114,16 +114,21 @@ int main(void) {
   BSP_FDCAN_Init();
   AnalogSignal_Process_Init();
   uint8_t tx_data[8] = {1, 1, 4, 5, 1, 4, 0, 0};
+
+  FOC_OpenLoop_t openloop;
+  FOC_PWM_t pwm;
+  FOC_OpenLoop_Init(&openloop, 0.5f, 10.0f);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1) {
-    HAL_Delay(100);
+    HAL_Delay(10);
     BSP_LED_Status(LED_ON);
-    HAL_Delay(100);
+    HAL_Delay(10);
     BSP_LED_Status(LED_OFF);
     BSP_FDCAN_SendMsg(0x114, tx_data);
+    FOC_OpenLoop_Update(&openloop, &pwm, 0.1f);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

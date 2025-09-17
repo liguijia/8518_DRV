@@ -59,6 +59,18 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
 
 # ---------------------------------------------------------------------------- #
 
+# FPU
+set(CPU_OPTIONS
+    -mcpu=cortex-m4
+    -mthumb
+    -mfpu=fpv4-sp-d16
+    -mfloat-abi=hard
+)
+target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE ${CPU_OPTIONS})
+target_link_options(${CMAKE_PROJECT_NAME} PRIVATE ${CPU_OPTIONS})
+
+# ---------------------------------------------------------------------------- #
+
 # Add project symbols (macros)
 target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user defined symbols

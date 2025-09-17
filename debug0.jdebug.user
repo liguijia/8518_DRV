@@ -1,36 +1,35 @@
 
 
 
-Breakpoint=D:/Codes/8518_DRV/Core/Src/main.c:123:5, State=BP_STATE_DISABLED
-OpenDocument="stm32g4xx_hal.c", FilePath="D:/Codes/8518_DRV/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.c", Line=315
-OpenDocument="main.c", FilePath="D:/Codes/8518_DRV/Core/Src/main.c", Line=56
+Breakpoint=D:/Codes/8518_DRV/Core/Src/main.c:126:5, State=BP_STATE_DISABLED
+OpenDocument="analog_signal.c", FilePath="D:/Codes/8518_DRV/User/FOC/Src/analog_signal.c", Line=0
+OpenDocument="stm32g4xx_hal.c", FilePath="D:/Codes/8518_DRV/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.c", Line=321
+OpenDocument="main.c", FilePath="D:/Codes/8518_DRV/Core/Src/main.c", Line=59
 OpenDocument="bsp_adc.c", FilePath="D:/Codes/8518_DRV/User/BSP/Src/bsp_adc.c", Line=0
 OpenDocument="stm32g4xx_hal_adc.c", FilePath="D:/Codes/8518_DRV/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc.c", Line=3641
-OpenDocument="stm32g4xx_it.c", FilePath="D:/Codes/8518_DRV/Core/Src/stm32g4xx_it.c", Line=212
+OpenDocument="stm32g4xx_it.c", FilePath="D:/Codes/8518_DRV/Core/Src/stm32g4xx_it.c", Line=74
 OpenDocument="startup_stm32g431xx.s", FilePath="D:/Codes/8518_DRV/startup_stm32g431xx.s", Line=43
 OpenDocument="stm32g4xx_ll_adc.h", FilePath="D:/Codes/8518_DRV/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_adc.h", Line=3880
 OpenDocument="stm32g4xx_hal_adc_ex.c", FilePath="D:/Codes/8518_DRV/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc_ex.c", Line=107
 OpenDocument="stm32g4xx_hal_msp.c", FilePath="D:/Codes/8518_DRV/Core/Src/stm32g4xx_hal_msp.c", Line=11
 OpenDocument="stm32g4xx_hal_dma.c", FilePath="D:/Codes/8518_DRV/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma.c", Line=745
 OpenToolbar="Debug", Floating=0, x=0, y=0
-OpenWindow="Registers 1", DockArea=RIGHT, x=0, y=1, w=306, h=1057, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, FilteredItems=[], RefreshRate=1
-OpenWindow="Source Files", DockArea=LEFT, x=0, y=0, w=817, h=248, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
-OpenWindow="Disassembly", DockArea=RIGHT, x=0, y=0, w=306, h=375, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
-OpenWindow="Memory 1", DockArea=BOTTOM, x=2, y=0, w=221, h=319, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, EditorAddress=0x48
-OpenWindow="Watched Data 1", DockArea=LEFT, x=0, y=1, w=817, h=1184, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
-OpenWindow="Data Sampling", DockArea=BOTTOM, x=1, y=0, w=1288, h=319, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, VisibleTab=0, UniformSampleSpacing=0
-OpenWindow="Console", DockArea=BOTTOM, x=0, y=0, w=1034, h=319, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Registers 1", DockArea=RIGHT, x=0, y=1, w=306, h=834, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, FilteredItems=[], RefreshRate=1
+OpenWindow="Source Files", DockArea=LEFT, x=0, y=0, w=817, h=208, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Disassembly", DockArea=RIGHT, x=0, y=0, w=306, h=303, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Memory 1", DockArea=BOTTOM, x=2, y=0, w=185, h=319, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, EditorAddress=0x48
+OpenWindow="Watched Data 1", DockArea=LEFT, x=0, y=1, w=817, h=929, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Data Sampling", DockArea=BOTTOM, x=1, y=0, w=1073, h=319, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, VisibleTab=0, UniformSampleSpacing=0
+OpenWindow="Console", DockArea=BOTTOM, x=0, y=0, w=865, h=319, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
 SmartViewPlugin="", Page="", Toolbar="Hidden", Window="SmartView 1"
 TableHeader="Source Files", SortCol="File", SortOrder="ASCENDING", VisibleCols=["File";"Status";"Size";"#Insts";"Path"], ColWidths=[263;100;100;100;806]
 TableHeader="Data Sampling Table", SortCol="None", SortOrder="ASCENDING", VisibleCols=["Index";"Time"], ColWidths=[100;100]
-TableHeader="Data Sampling Setup", SortCol="Expression", SortOrder="DESCENDING", VisibleCols=["Expression";"Type";"Value";"Min";"Max";"Average";"# Changes";"Min. Change";"Max. Change"], ColWidths=[281;100;100;100;100;100;110;126;271]
+TableHeader="Data Sampling Setup", SortCol="Expression", SortOrder="DESCENDING", VisibleCols=["Expression";"Type";"Value";"Min";"Max";"Average";"# Changes";"Min. Change";"Max. Change"], ColWidths=[281;100;100;100;100;100;110;126;126]
 TableHeader="Power Sampling", SortCol="None", SortOrder="ASCENDING", VisibleCols=["Index";"Time";"Ch 0"], ColWidths=[100;100;100]
 TableHeader="Registers 1", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Description"], ColWidths=[100;105;294]
 TableHeader="Watched Data 1", SortCol="Expression", SortOrder="ASCENDING", VisibleCols=["Expression";"Value";"Location";"Refresh"], ColWidths=[243;340;100;134]
 TableHeader="RegisterSelectionDialog", SortCol="None", SortOrder="ASCENDING", VisibleCols=[], ColWidths=[]
 TableHeader="TargetExceptionDialog", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Address";"Description"], ColWidths=[200;100;100;1080]
-WatchedExpression="adc1_regulargroup_data", RefreshRate=5, Window=Watched Data 1
-WatchedExpression="adc2_regulargroup_data", RefreshRate=5, Window=Watched Data 1
-WatchedExpression="adc1_injectedgroup_data", RefreshRate=5, Window=Watched Data 1
-WatchedExpression="test3", RefreshRate=5, Window=Watched Data 1
 WatchedExpression="&hadc1", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="adc_pack", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="analogdata", RefreshRate=5, Window=Watched Data 1
