@@ -1,7 +1,7 @@
 
 
 
-Breakpoint=D:/Codes/8518_DRV/Core/Src/main.c:122:5, State=BP_STATE_DISABLED
+Breakpoint=D:/Codes/8518_DRV/Core/Src/main.c:123:5, State=BP_STATE_DISABLED
 OpenDocument="stm32g4xx_hal.c", FilePath="D:/Codes/8518_DRV/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.c", Line=315
 OpenDocument="main.c", FilePath="D:/Codes/8518_DRV/Core/Src/main.c", Line=56
 OpenDocument="bsp_adc.c", FilePath="D:/Codes/8518_DRV/User/BSP/Src/bsp_adc.c", Line=0
@@ -13,11 +13,11 @@ OpenDocument="stm32g4xx_hal_adc_ex.c", FilePath="D:/Codes/8518_DRV/Drivers/STM32
 OpenDocument="stm32g4xx_hal_msp.c", FilePath="D:/Codes/8518_DRV/Core/Src/stm32g4xx_hal_msp.c", Line=11
 OpenDocument="stm32g4xx_hal_dma.c", FilePath="D:/Codes/8518_DRV/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma.c", Line=745
 OpenToolbar="Debug", Floating=0, x=0, y=0
-OpenWindow="Registers 1", DockArea=RIGHT, x=0, y=1, w=306, h=1067, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, FilteredItems=[], RefreshRate=1
-OpenWindow="Source Files", DockArea=LEFT, x=0, y=0, w=817, h=235, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
-OpenWindow="Disassembly", DockArea=RIGHT, x=0, y=0, w=306, h=365, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Registers 1", DockArea=RIGHT, x=0, y=1, w=306, h=1057, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, FilteredItems=[], RefreshRate=1
+OpenWindow="Source Files", DockArea=LEFT, x=0, y=0, w=817, h=248, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Disassembly", DockArea=RIGHT, x=0, y=0, w=306, h=375, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
 OpenWindow="Memory 1", DockArea=BOTTOM, x=2, y=0, w=221, h=319, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, EditorAddress=0x48
-OpenWindow="Watched Data 1", DockArea=LEFT, x=0, y=1, w=817, h=1197, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Watched Data 1", DockArea=LEFT, x=0, y=1, w=817, h=1184, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
 OpenWindow="Data Sampling", DockArea=BOTTOM, x=1, y=0, w=1288, h=319, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, VisibleTab=0, UniformSampleSpacing=0
 OpenWindow="Console", DockArea=BOTTOM, x=0, y=0, w=1034, h=319, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
 SmartViewPlugin="", Page="", Toolbar="Hidden", Window="SmartView 1"

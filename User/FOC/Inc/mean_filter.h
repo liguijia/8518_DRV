@@ -5,7 +5,7 @@
 #include <stdint.h>
 
 // 定义均值滤波器的最大窗口大小
-#define MAX_WINDOW_SIZE 256
+#define MAX_WINDOW_SIZE 128
 
 // 均值滤波器结构体
 typedef struct {
@@ -24,4 +24,4 @@ void mean_filter_update(mean_filter_t *filter, uint16_t new_sample);
 // 计算当前平均值
 uint16_t mean_filter_calculate_average(const mean_filter_t *filter);
 
-#endif // !__MEAN_FILTER_H__
+#endif // __MEAN_FILTER_H__
