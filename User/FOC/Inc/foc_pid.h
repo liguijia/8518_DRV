@@ -8,9 +8,9 @@ extern "C" {
 #include <stdint.h>
 
 typedef enum {
-  FOC_PID_TYPE_PI = 0,
-  FOC_PID_TYPE_PID,
-  FOC_PID_TYPE_INCREMENTAL
+  FOC_PID_TYPE_PI = 0,     // Proportional-Integral
+  FOC_PID_TYPE_PID,        // Proportional-Integral-Derivative
+  FOC_PID_TYPE_INCREMENTAL // Incremental PID
 } FOC_PID_type_t;
 
 typedef struct {

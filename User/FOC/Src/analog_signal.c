@@ -28,15 +28,15 @@ typedef struct {
 static board_adc_calibration_t adc_cali_array = {
     {0x00000000, 0x00000000, 0x00000222}, // STM32 唯一 ID
     // input voltage ：R1=49.9k  R2=3.3k
-    {0.0008117675f, -0.0000000000f},
+    {0.0170068027f, -0.0000000000f},
     // temperature：R1=10k  NTC=10k
-    {0.0008117675f, -0.0000000000f},
-    {0.0008117675f, -0.0000000000f},
-    {0.0008117675f, -0.0000000000f},
-    // 3phase current : R_sense=1mR  Gain=50
-    {0.0009980598f, -32.600164291f},
-    {0.0009980598f, -32.600164291f},
-    {0.0009980598f, -32.600164291f},
+    {0.322f, -279.0f},
+    {-0.037833064f, 114.39492194f},
+    {-0.037833064f, 114.39492194f},
+    // 3phase current : R_sense=1mR  Gain=20
+    {0.04029f, -82.5f},
+    {0.04029f, -82.5f},
+    {0.04029f, -82.5f},
 
 };
 static mean_filter_t vin = {0};
@@ -60,7 +60,7 @@ void AnalogSignal_Process_Init(void) {
 
   // 初始化均值滤波器
   mean_filter_init(&vin, FILTER_WINDOW_SIZE);
-  mean_filter_init(&temp_mcu, FILTER_WINDOW_SIZE);
+  mean_filter_init(&temp_mcu, FILTER_WINDOW_SIZE * 16);
   mean_filter_init(&temp_ntc1, FILTER_WINDOW_SIZE);
   mean_filter_init(&temp_ntc2, FILTER_WINDOW_SIZE);
   mean_filter_init(&ia, FILTER_WINDOW_SIZE);

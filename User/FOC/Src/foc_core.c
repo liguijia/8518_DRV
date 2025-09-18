@@ -5,6 +5,8 @@
 #include "foc_core.h"
 #include "foc_pid.h"
 
+#include "arm_math.h"
+
 #define SQRT3_BY_2 0.86602540378f
 
 /* ------------------ Clarke ------------------ */
@@ -25,6 +27,9 @@ void InvClarke(const alpha_beta_t *i_alpha_beta, phase_current_t *i_abc) {
 void Park(const alpha_beta_t *i_alpha_beta, float theta_e, dq_t *i_dq) {
   float c = cosf(theta_e);
   float s = sinf(theta_e);
+
+  // float c = arm_cos_f32( theta_e );
+  // float s = arm_sin_f32( theta_e );
 
   i_dq->d = i_alpha_beta->alpha * c + i_alpha_beta->beta * s;
   i_dq->q = -i_alpha_beta->alpha * s + i_alpha_beta->beta * c;

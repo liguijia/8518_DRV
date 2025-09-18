@@ -117,7 +117,7 @@ int main(void) {
 
   FOC_OpenLoop_t openloop;
   FOC_PWM_t pwm;
-  FOC_OpenLoop_Init(&openloop, 0.5f, 10.0f);
+  FOC_OpenLoop_Init(&openloop, 5.0f, 2000.0f);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -128,7 +128,7 @@ int main(void) {
     HAL_Delay(10);
     BSP_LED_Status(LED_OFF);
     BSP_FDCAN_SendMsg(0x114, tx_data);
-    FOC_OpenLoop_Update(&openloop, &pwm, 0.1f);
+    FOC_OpenLoop_Update(&openloop, &pwm, 0.001f);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
