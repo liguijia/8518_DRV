@@ -27,13 +27,16 @@
 #include "tim.h"
 #include "usart.h"
 
+
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "analog_signal.h"
 #include "bsp_can.h"
+#include "bsp_kth7823.h"
 #include "bsp_led.h"
 #include "bsp_pwm.h"
 #include "foc_openloop.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -118,6 +121,11 @@ int main(void) {
   FOC_OpenLoop_t openloop;
   FOC_PWM_t pwm;
   FOC_OpenLoop_Init(&openloop, 5.0f, 2000.0f);
+
+  KTH7823_HandleTypeDef henc;
+  BSP_KTH7823_Init(&henc, &hspi1, SPI1_CS_GPIO_Port, SPI1_CS_Pin, 0,
+                   KTH7823_CW);
+  float angle = 0.0f;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -129,6 +137,7 @@ int main(void) {
     BSP_LED_Status(LED_OFF);
     BSP_FDCAN_SendMsg(0x114, tx_data);
     FOC_OpenLoop_Update(&openloop, &pwm, 0.001f);
+    BSP_KTH7823_ReadAngle(&henc, &angle);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
