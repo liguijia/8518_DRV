@@ -5,10 +5,9 @@
 extern "C" {
 #endif
 
-#include "analog_signal.h"
 #include "bsp_pwm.h"
-#include <stdint.h>
-
+#include "foc_pid.h"
+#include <analog_signal.h>
 // 三相坐标
 typedef struct {
   float a;
@@ -28,16 +27,14 @@ typedef struct {
   float q;
 } dq_t;
 
-/* ------------------ Clarke ------------------ */
-void Clarke(const phase_current_t *i_abc, alpha_beta_t *i_alpha_beta);
-void InvClarke(const alpha_beta_t *i_alpha_beta, phase_current_t *i_abc);
+extern void InvPark(const dq_t *i_dq, float theta_e,
+                    alpha_beta_t *i_alpha_beta);
+extern void SVPWM_Offset_Float(const alpha_beta_t *volt, FOC_PWM_t *pwm);
 
-/* ------------------ Park ------------------ */
-void Park(const alpha_beta_t *i_alpha_beta, float theta_e, dq_t *i_dq);
-void InvPark(const dq_t *i_dq, float theta_e, alpha_beta_t *i_alpha_beta);
-
-/* ------------------ SVPWM Offset ------------------ */
-void SVPWM_Offset_Float(const alpha_beta_t *volt, FOC_PWM_t *pwm);
+extern void FOC_Init(void);
+extern void FOC_UpdatePWM(const phase_current_t *i_abc, float theta_e,
+                          FOC_PWM_t *pwm, FOC_PID_ctrl_t *id_pid, float id_ref,
+                          FOC_PID_ctrl_t *iq_pid, float iq_ref);
 
 #ifdef __cplusplus
 }

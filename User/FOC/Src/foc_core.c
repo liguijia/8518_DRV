@@ -66,31 +66,9 @@ void SVPWM_Offset_Float(const alpha_beta_t *volt, FOC_PWM_t *pwm) {
 FOC_PID_ctrl_t id_pid;
 FOC_PID_ctrl_t iq_pid;
 
-void FOC_Init(void) {
-  // d 轴电流环
-  FOC_PID_Init(&id_pid, FOC_PID_TYPE_PI,
-               0.2f,    // Kp
-               0.01f,   // Ki
-               0.0f,    // Kd (PI 模式忽略)
-               1e-4f,   // dt (100 µs 控制周期)
-               10.0f,   // 积分限幅
-               12.0f,   // 输出限幅
-               0.001f); // d 滤波时间常数
-
-  // q 轴电流环
-  FOC_PID_Init(&iq_pid, FOC_PID_TYPE_PI,
-               0.2f,  // Kp
-               0.01f, // Ki
-               0.0f,  // Kd (PI 模式忽略)
-               1e-4f, // dt (100 µs 控制周期)
-               10.0f, // 积分限幅
-               12.0f, // 输出限幅
-               0.001f // d 滤波时间常数
-  );
-}
-
 void FOC_UpdatePWM(const phase_current_t *i_abc, float theta_e, FOC_PWM_t *pwm,
-                   float id_ref, float iq_ref) {
+                   FOC_PID_ctrl_t *id_pid, float id_ref, FOC_PID_ctrl_t *iq_pid,
+                   float iq_ref) {
   alpha_beta_t i_alpha_beta;
   dq_t i_dq;
   dq_t v_dq;
@@ -103,8 +81,8 @@ void FOC_UpdatePWM(const phase_current_t *i_abc, float theta_e, FOC_PWM_t *pwm,
   Park(&i_alpha_beta, theta_e, &i_dq);
 
   // 3. PI 控制器计算 dq 电压
-  v_dq.d = FOC_PID_Compute(&id_pid, i_dq.d, id_ref); /* vd = 电流 d 轴控制 */
-  v_dq.q = FOC_PID_Compute(&iq_pid, i_dq.q, iq_ref); /* vq = 电流 q 轴控制 */
+  v_dq.d = FOC_PID_Compute(id_pid, i_dq.d, id_ref); /* vd = 电流 d 轴控制 */
+  v_dq.q = FOC_PID_Compute(iq_pid, i_dq.q, iq_ref); /* vq = 电流 q 轴控制 */
 
   // 4. 逆 Park
   InvPark(&v_dq, theta_e, &v_alpha_beta);

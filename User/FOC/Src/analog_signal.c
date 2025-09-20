@@ -2,6 +2,8 @@
 #include "bsp_adc.h"
 #include "mean_filter.h"
 
+#include "foc_controller.h"
+
 #define FILTER_WINDOW_SIZE 8 // 定义滤波窗口大小
 
 analogdata_t analogdata = {0};
@@ -91,4 +93,7 @@ void ADC1_InjectedConvCpltCallback(void) {
   analogdata.phase_current.a = get_mapped_value(&ia, &adc_cali_array.ia);
   analogdata.phase_current.b = get_mapped_value(&ib, &adc_cali_array.ib);
   analogdata.phase_current.c = get_mapped_value(&ic, &adc_cali_array.ic);
+
+  /* 调用 FOC 电流环更新（24kHz） */
+  FOC_CurrentLoop_Update(&foc, &analogdata.phase_current);
 }

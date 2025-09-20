@@ -55,6 +55,7 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user defined include paths
     "User/BSP/Inc"
     "User/FOC/Inc"
+    "User/FOC"
 )
 
 # ---------------------------------------------------------------------------- #

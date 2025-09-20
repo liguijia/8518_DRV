@@ -75,9 +75,7 @@ uint8_t BSP_KTH7823_WriteRegister(KTH7823_HandleTypeDef *hdev, uint8_t reg_addr,
   if (resp == 0xFFFFu)
     return KTH7823_ERROR;
 
-  /* 如果寄存器为非易失性（需等待），建议延时保证写入生效 */
-  /* 用户原来用了 HAL_Delay(20)；这里不自动阻塞，留给上层需要时使用。 */
-  /* 但为了兼容原逻辑，我们可以短暂延时做读回验证 */
+  /* 短暂延时做读回验证 */
   HAL_Delay(5);
 
   /* 读回校验（可选） */
