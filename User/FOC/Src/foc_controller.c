@@ -4,8 +4,7 @@
 #include <math.h>
 
 #define TWO_PI 6.28318530718f
-
-FOC_Controller_t foc;
+// constexpr float PI = 3.14159265359f;
 
 /* ----------------- 初始化 ----------------- */
 void FOC_Controller_Init(FOC_Controller_t *foc, KTH7823_HandleTypeDef *encoder,
@@ -25,19 +24,17 @@ void FOC_Controller_Init(FOC_Controller_t *foc, KTH7823_HandleTypeDef *encoder,
   // 电流环 PID
   FOC_PID_Init(&foc->id_pid, FOC_PID_TYPE_PI, 0.2f, 0.01f, 0.0f, dt_current,
                10.0f, 12.0f, 0.001f);
-  FOC_PID_Init(&foc->iq_pid, FOC_PID_TYPE_PI, 0.2f, 0.01f, 0.0f, dt_current,
-               10.0f, 12.0f, 0.001f);
+  FOC_PID_Init(&foc->iq_pid, FOC_PID_TYPE_PI, 0.5f, 0.005f, 0.0f, dt_current,
+               5.0f, 20.0f, 0.001f);
 
   // 速度环 PID
-  FOC_PID_Init(&foc->speed_pid, FOC_PID_TYPE_PI, 0.5f, 0.1f, 0.0f, dt_speed,
-               10.0f, 12.0f, 0.01f);
+  FOC_PID_Init(&foc->speed_pid, FOC_PID_TYPE_PI, 0.5f, 0.01f, 0.0f, dt_speed,
+               5.0f, 20.0f, 0.0001f);
 
   // 位置环 PID
   FOC_PID_Init(&foc->position_pid, FOC_PID_TYPE_PI, 0.5f, 0.05f, 0.0f,
                dt_position, 100.0f, 500.0f, 0.01f);
 }
-
-float angle = 0.0f;
 
 /* ----------------- 电流环 ----------------- */
 void FOC_CurrentLoop_Update(FOC_Controller_t *foc,
@@ -48,8 +45,6 @@ void FOC_CurrentLoop_Update(FOC_Controller_t *foc,
   float angle_deg;
   if (BSP_KTH7823_ReadAngle(foc->encoder, &angle_deg) != KTH7823_OK)
     return;
-
-  angle = angle_deg;
 
   // 转成弧度 (0..2π)
   float angle_rad = angle_deg * TWO_PI / 360.0f;
@@ -67,24 +62,39 @@ void FOC_SpeedLoop_Update(FOC_Controller_t *foc) {
   if (!foc)
     return;
 
-  float pos_now;
-  if (BSP_KTH7823_ReadAngle(foc->encoder, &pos_now) != KTH7823_OK)
+  float pos_now_deg;
+  if (BSP_KTH7823_ReadAngle(foc->encoder, &pos_now_deg) != KTH7823_OK)
     return;
-  // 把角度转成弧度存储
-  pos_now = pos_now * TWO_PI / 360.0f;
-  // 机械角速度(rad/s)
-  float delta = pos_now - foc->position_mech;
-  if (delta > 180.0f)
-    delta -= 360.0f;
-  else if (delta < -180.0f)
-    delta += 360.0f;
 
-  foc->speed_mech = delta / foc->speed_pid.dt;
+  // 转换成弧度 (0 ~ 2π)
+  float pos_now = pos_now_deg * TWO_PI / 360.0f;
+
+  // 角度差 (弧度)
+  float delta = pos_now - foc->position_mech;
+  if (delta > M_PI)
+    delta -= TWO_PI;
+  else if (delta < -M_PI)
+    delta += TWO_PI;
+
+  // 计算机械速度 (rad/s)，差分法
+  float raw_speed = delta / foc->speed_pid.dt;
+
+  // 速度滤波（指数平均法）
+  const float alpha = 0.1f; // 0~1，越小越平滑
+  foc->speed_mech = (1.0f - alpha) * foc->speed_mech + alpha * raw_speed;
+
+  // 保存最新位置
   foc->position_mech = pos_now;
 
-  // 速度环生成 iq_ref
+  // 速度环 PID：注意参数顺序（假设 Compute(ref, feedback)）
   foc->iq_ref =
-      FOC_PID_Compute(&foc->speed_pid, foc->speed_mech, foc->speed_ref);
+      FOC_PID_Compute(&foc->speed_pid, foc->speed_ref, foc->speed_mech);
+
+  // 限幅 iq_ref，避免过大
+  if (foc->iq_ref > MOTOR_MAX_CURRENT)
+    foc->iq_ref = MOTOR_MAX_CURRENT;
+  else if (foc->iq_ref < -MOTOR_MAX_CURRENT)
+    foc->iq_ref = -MOTOR_MAX_CURRENT;
 }
 
 /* ----------------- 位置环 ----------------- */

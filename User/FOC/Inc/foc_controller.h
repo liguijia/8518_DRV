@@ -38,8 +38,6 @@ typedef struct {
   KTH7823_HandleTypeDef *encoder;
 } FOC_Controller_t;
 
-/* 全局 FOC 控制器实例 */
-
 extern FOC_Controller_t foc;
 
 /* ----------------- 外部接口函数 ----------------- */
