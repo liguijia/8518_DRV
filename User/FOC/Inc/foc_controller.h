@@ -5,6 +5,7 @@
 #include "bsp_kth7823.h"
 #include "bsp_pwm.h"
 #include "foc_pid.h"
+#include "pll_speed_estimator.h"
 #include <stdbool.h>
 
 /* ----------------- 结构体定义 ----------------- */
@@ -16,6 +17,8 @@ typedef struct {
 
   // 速度环 PID
   FOC_PID_ctrl_t speed_pid;
+  // 速度估算器
+  PLL_Handle speed_pll;
 
   // 位置环 PID
   FOC_PID_ctrl_t position_pid;
@@ -27,10 +30,10 @@ typedef struct {
   float position_ref;
 
   // 当前测量值
-  float theta_e;       // 电角度
-  float speed_mech;    // 机械速度
-  float position_mech; // 机械位置
-
+  float theta_e;           // 电角度
+  float pos_now_deg;       // 当前角度
+  float position_mech_deg; // 机械位置
+  float speed_mech_rpm;    // 机械速度 rpm
   // PWM 输出
   FOC_PWM_t pwm;
 
@@ -52,7 +55,7 @@ void FOC_CurrentLoop_Update(FOC_Controller_t *foc,
 
 // 速度环更新
 void FOC_SpeedLoop_Update(FOC_Controller_t *foc);
-
+void FOC_PLLSpeedLoop_Update(FOC_Controller_t *foc);
 // 位置环更新
 void FOC_PositionLoop_Update(FOC_Controller_t *foc);
 

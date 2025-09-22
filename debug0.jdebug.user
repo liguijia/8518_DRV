@@ -5,11 +5,12 @@ Breakpoint=D:/Codes/8518_DRV/Core/Src/main.c:143:31, State=BP_STATE_DISABLED
 GraphedExpression="((analogdata).phase_current).a", DisplayFormat=DISPLAY_FORMAT_DEC, Color=#e56a6f, Show=0
 GraphedExpression="((analogdata).phase_current).b", Color=#35792b, Show=0
 GraphedExpression="((analogdata).phase_current).c", Color=#769dda, Show=0
-GraphedExpression="(foc).speed_mech", Color=#b14f0d, Show=0
-GraphedExpression="(foc).iq_ref", Color=#b3c38e
-OpenDocument="analog_signal.c", FilePath="D:/Codes/8518_DRV/User/FOC/Src/analog_signal.c", Line=27
+GraphedExpression="(foc).iq_ref", Color=#b14f0d, Show=0
+GraphedExpression="(foc).pos_now_deg", Color=#b3c38e, Show=0
+GraphedExpression="(foc).speed_mech_rpm", Color=#ab7b05
+OpenDocument="analog_signal.c", FilePath="D:/Codes/8518_DRV/User/FOC/Src/analog_signal.c", Line=5
 OpenDocument="app_main.c", FilePath="D:/Codes/8518_DRV/User/APP/Src/app_main.c", Line=0
-OpenDocument="stm32g4xx_it.c", FilePath="D:/Codes/8518_DRV/Core/Src/stm32g4xx_it.c", Line=218
+OpenDocument="stm32g4xx_it.c", FilePath="D:/Codes/8518_DRV/Core/Src/stm32g4xx_it.c", Line=76
 OpenDocument="main.c", FilePath="D:/Codes/8518_DRV/Core/Src/main.c", Line=59
 OpenDocument="bsp_adc.c", FilePath="D:/Codes/8518_DRV/User/BSP/Src/bsp_adc.c", Line=0
 OpenDocument="mean_filter.c", FilePath="D:/Codes/8518_DRV/User/FOC/Src/mean_filter.c", Line=0
@@ -25,18 +26,18 @@ OpenDocument="stm32g4xx_hal_dma.c", FilePath="D:/Codes/8518_DRV/Drivers/STM32G4x
 OpenDocument="stm32g4xx_hal_msp.c", FilePath="D:/Codes/8518_DRV/Core/Src/stm32g4xx_hal_msp.c", Line=11
 OpenDocument="foc_pid.c", FilePath="D:/Codes/8518_DRV/User/FOC/Src/foc_pid.c", Line=66
 OpenToolbar="Debug", Floating=0, x=0, y=0
-OpenWindow="Registers 1", DockArea=RIGHT, x=0, y=1, w=306, h=733, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, FilteredItems=[], RefreshRate=1
-OpenWindow="Source Files", DockArea=LEFT, x=0, y=0, w=817, h=391, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
-OpenWindow="Disassembly", DockArea=RIGHT, x=0, y=0, w=306, h=300, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Registers 1", DockArea=RIGHT, x=0, y=1, w=306, h=725, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, FilteredItems=[], RefreshRate=1
+OpenWindow="Source Files", DockArea=LEFT, x=0, y=0, w=817, h=396, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Disassembly", DockArea=RIGHT, x=0, y=0, w=306, h=308, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
 OpenWindow="Memory 1", DockArea=BOTTOM, x=3, y=0, w=139, h=730, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, EditorAddress=0x48
-OpenWindow="Watched Data 1", DockArea=LEFT, x=0, y=1, w=817, h=642, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
-OpenWindow="Data Sampling", DockArea=BOTTOM, x=2, y=0, w=320, h=730, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, VisibleTab=0, UniformSampleSpacing=0
-OpenWindow="Timeline", DockArea=BOTTOM, x=1, y=0, w=1466, h=730, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=1, DataPaneShown=1, PowerPaneShown=0, CodePaneShown=0, PinCursor="Cursor Movable", TimePerDiv="2 s / Div", TimeStampFormat="Time", DataGraphDrawAsPoints=0, DataGraphLegendShown=1, DataGraphUniformSampleSpacing=0, DataGraphLegendPosition="1070;0", DataGraphShowNamesAtCursor=0, PowerGraphDrawAsPoints=0, PowerGraphLegendShown=0, PowerGraphAvgFilterTime=Off, PowerGraphAvgFilterLen=Off, PowerGraphUniformSampleSpacing=0, PowerGraphLegendPosition="1285;0", CodeGraphLegendShown=0, CodeGraphLegendPosition="1292;0"
+OpenWindow="Watched Data 1", DockArea=LEFT, x=0, y=1, w=817, h=637, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Data Sampling", DockArea=BOTTOM, x=2, y=0, w=719, h=730, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, VisibleTab=0, UniformSampleSpacing=0
+OpenWindow="Timeline", DockArea=BOTTOM, x=1, y=0, w=1067, h=730, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=1, DataPaneShown=1, PowerPaneShown=0, CodePaneShown=0, PinCursor="Cursor Movable", TimePerDiv="200 ms / Div", TimeStampFormat="Time", DataGraphDrawAsPoints=0, DataGraphLegendShown=1, DataGraphUniformSampleSpacing=0, DataGraphLegendPosition="671;0", DataGraphShowNamesAtCursor=0, PowerGraphDrawAsPoints=0, PowerGraphLegendShown=0, PowerGraphAvgFilterTime=Off, PowerGraphAvgFilterLen=Off, PowerGraphUniformSampleSpacing=0, PowerGraphLegendPosition="1259;-61", CodeGraphLegendShown=0, CodeGraphLegendPosition="1266;0"
 OpenWindow="Console", DockArea=BOTTOM, x=0, y=0, w=228, h=730, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
 SmartViewPlugin="", Page="", Toolbar="Hidden", Window="SmartView 1"
 TableHeader="Source Files", SortCol="File", SortOrder="ASCENDING", VisibleCols=["File";"Status";"Size";"#Insts";"Path"], ColWidths=[263;100;100;100;822]
-TableHeader="Data Sampling Table", SortCol="None", SortOrder="ASCENDING", VisibleCols=["Index";"Time";" ((analogdata).phase_current).a";" ((analogdata).phase_current).b";" ((analogdata).phase_current).c";" (foc).speed_mech";" (foc).iq_ref"], ColWidths=[100;100;100;100;100;100;100]
-TableHeader="Data Sampling Setup", SortCol="Expression", SortOrder="DESCENDING", VisibleCols=["Expression";"Type";"Value";"Min";"Max";"Average";"# Changes";"Min. Change";"Max. Change"], ColWidths=[281;100;134;124;114;134;110;126;126]
+TableHeader="Data Sampling Table", SortCol="None", SortOrder="ASCENDING", VisibleCols=["Index";"Time";" ((analogdata).phase_current).a";" ((analogdata).phase_current).b";" ((analogdata).phase_current).c";" (foc).iq_ref";" (foc).pos_now_deg";" (foc).speed_mech_rpm"], ColWidths=[100;100;100;100;100;100;100;100]
+TableHeader="Data Sampling Setup", SortCol="Expression", SortOrder="DESCENDING", VisibleCols=["Expression";"Type";"Value";"Min";"Max";"Average";"# Changes";"Min. Change";"Max. Change"], ColWidths=[281;100;124;134;134;144;103;134;124]
 TableHeader="Power Sampling", SortCol="None", SortOrder="ASCENDING", VisibleCols=["Index";"Time";"Ch 0"], ColWidths=[100;100;100]
 TableHeader="Registers 1", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Description"], ColWidths=[100;105;294]
 TableHeader="Watched Data 1", SortCol="Expression", SortOrder="ASCENDING", VisibleCols=["Expression";"Value";"Location";"Refresh"], ColWidths=[243;340;100;108]
@@ -46,6 +47,5 @@ WatchedExpression="&hadc1", RefreshRate=5, Window=Watched Data 1
 WatchedExpression="adc_pack", RefreshRate=5, Window=Watched Data 1
 WatchedExpression="analogdata", RefreshRate=5, Window=Watched Data 1
 WatchedExpression="test_speed", RefreshRate=1, Window=Watched Data 1
-WatchedExpression="test_iq", RefreshRate=1, Window=Watched Data 1
+WatchedExpression="test_angle", RefreshRate=1, Window=Watched Data 1
 WatchedExpression="foc", RefreshRate=5, Window=Watched Data 1
-WatchedExpression="tim3_cnt", RefreshRate=5, Window=Watched Data 1
