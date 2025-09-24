@@ -14,7 +14,7 @@
 
 /* ----------------- FOC 控制参数 ----------------- */
 #define FOC_DT_CURRENT 0.0000417f // 电流环 24 kHz
-#define FOC_DT_SPEED 0.001f       // 速度环周期 1ms
+#define FOC_DT_SPEED 0.0002f      // 速度环周期 5 kHz
 #define FOC_DT_POSITION 0.01f     // 位置环周期 10ms
 
 /* ----------------- 默认初始值 ----------------- */
