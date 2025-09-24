@@ -26,16 +26,16 @@ void FOC_Controller_Init(FOC_Controller_t *foc, KTH7823_HandleTypeDef *encoder,
   // 电流环 PID
   FOC_PID_Init(&foc->id_pid, FOC_PID_TYPE_PI, 0.2f, 0.01f, 0.0f, dt_current,
                10.0f, 12.0f, 0.001f);
-  FOC_PID_Init(&foc->iq_pid, FOC_PID_TYPE_PI, 0.25f, 0.005f, 0.0f, dt_current,
+  FOC_PID_Init(&foc->iq_pid, FOC_PID_TYPE_PI, 0.225f, 0.005f, 0.0f, dt_current,
                5.0f, 20.0f, 0.001f);
-
-  PLL_Init(&foc->speed_pll, 25.0f, 15.0f, dt_speed);
+  // 速度环 PLL
+  PLL_Init(&foc->speed_pll, 27.5f, 12.5f, dt_speed);
   // 速度环 PID
-  FOC_PID_Init(&foc->speed_pid, FOC_PID_TYPE_PI, 0.05f, 0.05f, 0.0f, dt_speed,
+  FOC_PID_Init(&foc->speed_pid, FOC_PID_TYPE_PI, 0.075f, 0.025f, 0.0f, dt_speed,
                10.0f, 20.0f, 0.001f);
 
   // 位置环 PID
-  FOC_PID_Init(&foc->position_pid, FOC_PID_TYPE_PI, 0.05f, 0.005f, 0.0f,
+  FOC_PID_Init(&foc->position_pid, FOC_PID_TYPE_PI, 1.25f, 0.005f, 0.0f,
                dt_position, 10.0f, 300.0f, 0.001f);
 }
 
@@ -142,9 +142,15 @@ void FOC_PositionLoop_Update(FOC_Controller_t *foc) {
 
   foc->position_mech_deg = pos_now;
 
-  // 位置环生成 speed_ref
-  foc->speed_ref = FOC_PID_Compute(&foc->position_pid, foc->position_mech_deg,
-                                   foc->position_ref);
+  /* 单圈最短路径误差 */
+  float err = foc->position_ref - foc->position_mech_deg;
+  if (err > 180.0f)
+    err -= 360.0f;
+  if (err < -180.0f)
+    err += 360.0f;
+
+  /* 位置 PID 用误差计算，输出 speed_ref */
+  foc->speed_ref = FOC_PID_Compute(&foc->position_pid, err, 0.0f);
 }
 
 /* ----------------- 设置目标 ----------------- */

@@ -67,6 +67,7 @@ void AnalogSignal_Process_Init(void) {
   mean_filter_init(&temp_ntc2, FILTER_WINDOW_SIZE);
   mean_filter_init(&ia, FILTER_WINDOW_SIZE);
   mean_filter_init(&ib, FILTER_WINDOW_SIZE);
+
   mean_filter_init(&ic, FILTER_WINDOW_SIZE);
 }
 // 读取并处理  ADC1 规则组数据
