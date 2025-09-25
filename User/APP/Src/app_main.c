@@ -17,7 +17,7 @@
 
 // 测试用的 iq 参考值
 float test_iq = 0.5f;
-float test_speed = 100.0f;
+float test_speed = 10.0f;
 float test_pos = 100.0f;
 KTH7823_HandleTypeDef henc1;
 FOC_Controller_t foc;
@@ -38,21 +38,22 @@ void App_Main_Init(void) {
   BSP_PWM_Init();
 
   BSP_BreathLED_Init();
+  // BSP_PWM_Stop();
 }
 
 // 主循环
 void App_Main_Loop(void) {
   // 设置一个固定的 iq 参考值用于测试
-  // FOC_Controller_SetIdIq(&foc, 0.0f, test_iq);
+  FOC_Controller_SetIdIq(&foc, 0.0f, test_iq);
 }
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
   if (htim->Instance == TIM6) {
-    FOC_Controller_SetPosition(&foc, test_pos);
-    FOC_PositionLoop_Update(&foc);
+    // FOC_Controller_SetPosition(&foc, test_pos);
+    // FOC_PositionLoop_Update(&foc);
   }
   if (htim->Instance == TIM3) {
     // FOC_Controller_SetSpeed(&foc, test_speed); // 设置一个初始速度参考值
-    FOC_PLLSpeedLoop_Update(&foc);
+    // FOC_PLLSpeedLoop_Update(&foc);
   }
 }

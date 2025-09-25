@@ -5,11 +5,11 @@
 
 /* ----------------- 电机基本参数 ----------------- */
 #define MOTOR_POLE_PAIRS 14             // 电机极对数
-#define MOTOR_PHASE_RESISTANCE 10.05f   // 相电阻 (Ohm)
-#define MOTOR_PHASE_INDUCTANCE 0.00012f // 相电感 (H)
+#define MOTOR_PHASE_RESISTANCE 0.44f    // 相电阻 (Ohm)
+#define MOTOR_PHASE_INDUCTANCE 0.00023f // 相电感 (H)
 #define MOTOR_BACK_EMF_CONST 0.08f      // 反电动势常数 (V/rad/s)
 #define MOTOR_TORQUE_CONST 0.08f        // 转矩常数 (Nm/A)
-#define MOTOR_MAX_CURRENT 1.5f          // 最大电流 (A)
+#define MOTOR_MAX_CURRENT 5.0f          // 最大电流 (A)
 #define MOTOR_MAX_VOLTAGE 24.0f         // 最大电压 (V)
 
 /* ----------------- FOC 控制参数 ----------------- */

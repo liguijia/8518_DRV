@@ -10,5 +10,5 @@ typedef struct {
 
 extern void BSP_PWM_Init(void);
 extern void BSP_PWM_Set_Duty(const FOC_PWM_t *duty);
-
+extern void BSP_PWM_Stop(void);
 #endif /* __BSP_PWM_H__ */

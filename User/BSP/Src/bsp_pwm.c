@@ -16,10 +16,10 @@ FOC_PWM_t initial_pwm_duty = {0.0f, 0.0f, 0.0f};
 void BSP_PWM_Set_Duty(const FOC_PWM_t *duty) {
   __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, (uint16_t)duty_to_ccr(duty->a));
   __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_3, (uint16_t)duty_to_ccr(duty->b));
-  __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, (uint16_t)duty_to_ccr(duty->c));
+  __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, (uint16_t)duty_to_ccr(duty->c));
 }
 
-void BSP_PWM_Init() {
+void BSP_PWM_Init(void) {
   // 启动 TIM1 的 3 个通道和它们的互补通道
   HAL_TIM_Base_Start(&htim1);
   HAL_TIM_Base_Start_IT(&htim1);
@@ -35,7 +35,7 @@ void BSP_PWM_Init() {
   BSP_PWM_Set_Duty(&initial_pwm_duty); // 初始占空比为 0
 }
 
-void BSP_PWM_Stop() {
+void BSP_PWM_Stop(void) {
   BSP_PWM_Set_Duty(&initial_pwm_duty);     // 初始占空比为 0
   HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_1); // 通道 1
   HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_2); // 通道 2
