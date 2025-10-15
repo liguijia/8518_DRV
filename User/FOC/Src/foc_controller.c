@@ -26,8 +26,8 @@ void FOC_Controller_Init(FOC_Controller_t *foc, KTH7823_HandleTypeDef *encoder,
   // 电流环 PID
   FOC_PID_Init(&foc->id_pid, FOC_PID_TYPE_PI, 0.2f, 0.01f, 0.0f, dt_current,
                10.0f, 12.0f, 0.001f);
-  FOC_PID_Init(&foc->iq_pid, FOC_PID_TYPE_PI, 0.225f, 0.005f, 0.0f, dt_current,
-               5.0f, 20.0f, 0.001f);
+  FOC_PID_Init(&foc->iq_pid, FOC_PID_TYPE_PI, 0.00225f, 0.00005f, 0.0f,
+               dt_current, 5.0f, 20.0f, 0.001f);
   // 速度环 PLL
   PLL_Init(&foc->speed_pll, 27.5f, 12.5f, dt_speed);
   // 速度环 PID

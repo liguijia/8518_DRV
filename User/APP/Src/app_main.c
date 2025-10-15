@@ -1,5 +1,6 @@
 #include "main.h"
 #include "spi.h"
+#include "stm32g4xx_hal.h"
 #include "stm32g4xx_hal_tim.h"
 #include "tim.h"
 
@@ -11,20 +12,25 @@
 #include "bsp_led.h"
 #include "bsp_pwm.h"
 #include "foc_controller.h"
+#include "foc_openloop.h"
 #include "motor_config.h"
 #include "pll_speed_estimator.h"
 #include <stdint.h>
 
 // 测试用的 iq 参考值
-float test_iq = 0.5f;
+float test_iq = 1.5f;
 float test_speed = 100.0f;
 float test_pos = 100.0f;
 KTH7823_HandleTypeDef henc1;
 FOC_Controller_t foc;
+//
+FOC_OpenLoop_t openloop;
+FOC_PWM_t pwm;
+
 // 初始化函数
 void App_Main_Init(void) {
   // 初始化外设
-
+  FOC_OpenLoop_Init(&openloop, 0.5f, 10.0f);
   AnalogSignal_Process_Init();
 
   BSP_FDCAN_Init();
@@ -44,15 +50,17 @@ void App_Main_Init(void) {
 void App_Main_Loop(void) {
   // 设置一个固定的 iq 参考值用于测试
   // FOC_Controller_SetIdIq(&foc, 0.0f, test_iq);
+  HAL_Delay(10);
+  FOC_OpenLoop_Update(&openloop, &pwm, 0.1f);
 }
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
   if (htim->Instance == TIM6) {
-    FOC_Controller_SetPosition(&foc, test_pos);
-    FOC_PositionLoop_Update(&foc);
+    // FOC_Controller_SetPosition(&foc, test_pos);
+    // FOC_PositionLoop_Update(&foc);
   }
   if (htim->Instance == TIM3) {
     // FOC_Controller_SetSpeed(&foc, test_speed); // 设置一个初始速度参考值
-    FOC_PLLSpeedLoop_Update(&foc);
+    // FOC_PLLSpeedLoop_Update(&foc);
   }
 }
