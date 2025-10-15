@@ -4,10 +4,10 @@
 #include <math.h>
 
 #define SQRT3_BY_2 0.86602540378f
-#define OPENLOOP_MAX_VOLT 0.8f    // 最大 q 轴电压（防止饱和）
-#define OPENLOOP_MIN_VOLT 0.1f    // 最小 q 轴电压起始值
-#define OPENLOOP_RAMP_STEP 0.002f // 每次更新电压增加量
-#define OPENLOOP_SCALE 0.9f       // PWM 缩放系数，避免饱和
+#define OPENLOOP_MAX_VOLT 0.8f     // 最大 q 轴电压（防止饱和）
+#define OPENLOOP_MIN_VOLT 0.1f     // 最小 q 轴电压起始值
+#define OPENLOOP_RAMP_STEP 0.0002f // 每次更新电压增加量
+#define OPENLOOP_SCALE 0.9f        // PWM 缩放系数，避免饱和
 
 typedef struct {
   float theta_e;        // 电角度

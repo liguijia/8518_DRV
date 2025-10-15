@@ -14,9 +14,9 @@ static inline uint32_t duty_to_ccr(float duty) {
 FOC_PWM_t initial_pwm_duty = {0.0f, 0.0f, 0.0f};
 
 void BSP_PWM_Set_Duty(const FOC_PWM_t *duty) {
-  __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_3, (uint16_t)duty_to_ccr(duty->a));
+  __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, (uint16_t)duty_to_ccr(duty->a));
   __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, (uint16_t)duty_to_ccr(duty->b));
-  __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, (uint16_t)duty_to_ccr(duty->c));
+  __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_3, (uint16_t)duty_to_ccr(duty->c));
 }
 
 void BSP_PWM_Init() {

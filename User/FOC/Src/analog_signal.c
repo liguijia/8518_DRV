@@ -96,5 +96,5 @@ void ADC1_InjectedConvCpltCallback(void) {
   analogdata.phase_current.c = get_mapped_value(&ic, &adc_cali_array.ic);
 
   /* 调用 FOC 电流环更新（24kHz） */
-  FOC_CurrentLoop_Update(&foc, &analogdata.phase_current);
+  // FOC_CurrentLoop_Update(&foc, &analogdata.phase_current);
 }
