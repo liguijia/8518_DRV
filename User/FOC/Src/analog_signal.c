@@ -91,10 +91,10 @@ void ADC1_InjectedConvCpltCallback(void) {
   mean_filter_update(&ia, ADC1_INJ(0));
   mean_filter_update(&ib, ADC1_INJ(1));
   mean_filter_update(&ic, ADC1_INJ(2));
-  analogdata.phase_current.a = get_mapped_value(&ia, &adc_cali_array.ia);
-  analogdata.phase_current.b = get_mapped_value(&ib, &adc_cali_array.ib);
-  analogdata.phase_current.c = get_mapped_value(&ic, &adc_cali_array.ic);
+  foc.phase_current.a = get_mapped_value(&ia, &adc_cali_array.ia);
+  foc.phase_current.b = get_mapped_value(&ib, &adc_cali_array.ib);
+  foc.phase_current.c = get_mapped_value(&ic, &adc_cali_array.ic);
 
   /* 调用 FOC 电流环更新（24kHz） */
-  // FOC_CurrentLoop_Update(&foc, &analogdata.phase_current);
+  FOC_CurrentLoop_Update(&foc);
 }

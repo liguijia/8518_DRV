@@ -6,8 +6,10 @@ extern "C" {
 #endif
 
 #include "bsp_pwm.h"
+#include "foc_controller.h"
 #include "foc_pid.h"
 #include <analog_signal.h>
+
 // 三相坐标
 typedef struct {
   float a;
@@ -32,9 +34,7 @@ extern void InvPark(const dq_t *i_dq, float theta_e,
 extern void SVPWM_Offset_Float(const alpha_beta_t *volt, FOC_PWM_t *pwm);
 
 extern void FOC_Init(void);
-extern void FOC_UpdatePWM(const phase_current_t *i_abc, float theta_e,
-                          FOC_PWM_t *pwm, FOC_PID_ctrl_t *id_pid, float id_ref,
-                          FOC_PID_ctrl_t *iq_pid, float iq_ref);
+extern void FOC_UpdatePWM(FOC_Controller_t *foc);
 
 #ifdef __cplusplus
 }

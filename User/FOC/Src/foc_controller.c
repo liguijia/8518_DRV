@@ -19,15 +19,16 @@ void FOC_Controller_Init(FOC_Controller_t *foc, KTH7823_HandleTypeDef *encoder,
   foc->position_ref = 0.0f;
   // 初始值
   foc->theta_e = 0.0f;
+  foc->zero_offset_rad = MOTOR_DEFAULT_ZERO_ANGLE * M_PI / 180.0f;
   foc->pos_now_deg = 0.0f;
-  foc->speed_mech_rpm = 0.0f;
-  foc->position_mech_deg = 0.0f;
+  foc->speed_now_rpm = 0.0f;
+  foc->pos_out_deg = 0.0f;
 
   // 电流环 PID
-  FOC_PID_Init(&foc->id_pid, FOC_PID_TYPE_PI, 0.2f, 0.01f, 0.0f, dt_current,
-               10.0f, 12.0f, 0.001f);
-  FOC_PID_Init(&foc->iq_pid, FOC_PID_TYPE_PI, 0.00225f, 0.00005f, 0.0f,
-               dt_current, 5.0f, 20.0f, 0.001f);
+  FOC_PID_Init(&foc->id_pid, FOC_PID_TYPE_PI, 0.0525f, 0.0005f, 0.0f,
+               dt_current, 10.0f, 5.0f, 0.001f);
+  FOC_PID_Init(&foc->iq_pid, FOC_PID_TYPE_PI, 0.125f, 0.075f, 0.0f, dt_current,
+               10.0f, 30.0f, 0.001f);
   // 速度环 PLL
   PLL_Init(&foc->speed_pll, 27.5f, 12.5f, dt_speed);
   // 速度环 PID
@@ -40,70 +41,30 @@ void FOC_Controller_Init(FOC_Controller_t *foc, KTH7823_HandleTypeDef *encoder,
 }
 
 /* ----------------- 电流环 ----------------- */
-void FOC_CurrentLoop_Update(FOC_Controller_t *foc,
-                            const phase_current_t *i_abc) {
-  if (!foc || !i_abc)
+void FOC_CurrentLoop_Update(FOC_Controller_t *foc) {
+  if (!foc)
     return;
 
+  // 读取编码器角度
   if (BSP_KTH7823_ReadAngle(foc->encoder, &foc->pos_now_deg) != KTH7823_OK)
     return;
 
   // 转成弧度 (0..2π)
-  float angle_rad = foc->pos_now_deg * TWO_PI / 360.0f;
+  float mech_rad = foc->pos_now_deg * TWO_PI / 360.0f;
+
+  // 加上零点校准偏移
+  mech_rad -= foc->zero_offset_rad;
+  if (mech_rad < 0.0f)
+    mech_rad += TWO_PI;
 
   // 电角度 = 机械角度 * 极对数
-  foc->theta_e = fmodf(angle_rad * MOTOR_POLE_PAIRS, TWO_PI);
+  foc->theta_e = fmodf(mech_rad * MOTOR_POLE_PAIRS, TWO_PI);
 
-  // 更新 PWM
-  FOC_UpdatePWM(i_abc, foc->theta_e, &foc->pwm, &foc->id_pid, foc->id_ref,
-                &foc->iq_pid, foc->iq_ref);
+  // 调用电流环控制算法
+  FOC_UpdatePWM(foc);
 }
 
 /* ----------------- 速度环 ----------------- */
-void FOC_SpeedLoop_Update(FOC_Controller_t *foc) {
-  if (!foc)
-    return;
-
-  if (BSP_KTH7823_ReadAngle(foc->encoder, &foc->pos_now_deg) != KTH7823_OK)
-    return;
-
-  // --- 角度展开 ---
-  static float last_deg = 0.0f;
-  static int revolutions = 0;
-
-  float delta_deg = foc->pos_now_deg - last_deg;
-  if (delta_deg > 180.0f) {
-    revolutions--;
-  } else if (delta_deg < -180.0f) {
-    revolutions++;
-  }
-
-  float pos_cont_deg = foc->pos_now_deg + 360.0f * revolutions;
-  last_deg = foc->pos_now_deg;
-
-  // --- 差分求速度 ---
-  float delta_cont_deg = pos_cont_deg - foc->position_mech_deg;
-  foc->position_mech_deg = pos_cont_deg;
-
-  float raw_speed_dps = delta_cont_deg / foc->speed_pid.dt; // deg/s
-  float raw_speed_rpm = raw_speed_dps * 60.0f / 360.0f;     // rpm
-
-  // --- 滤波 ---
-  const float alpha = 0.1f;
-  foc->speed_mech_rpm =
-      (1.0f - alpha) * foc->speed_mech_rpm + alpha * raw_speed_rpm;
-
-  // --- PID 控制 ---
-  foc->iq_ref =
-      FOC_PID_Compute(&foc->speed_pid, foc->speed_ref, foc->speed_mech_rpm);
-
-  // 限幅 iq_ref
-  if (foc->iq_ref > MOTOR_MAX_CURRENT)
-    foc->iq_ref = MOTOR_MAX_CURRENT;
-  else if (foc->iq_ref < -MOTOR_MAX_CURRENT)
-    foc->iq_ref = -MOTOR_MAX_CURRENT;
-}
-
 void FOC_PLLSpeedLoop_Update(FOC_Controller_t *foc) {
   if (!foc)
     return;
@@ -118,11 +79,11 @@ void FOC_PLLSpeedLoop_Update(FOC_Controller_t *foc) {
   float speed_rad_s = PLL_Update(&foc->speed_pll, pos_now_rad);
 
   // 转换为 rpm
-  foc->speed_mech_rpm = speed_rad_s * 60.0f / (2.0f * M_PI);
+  foc->speed_now_rpm = speed_rad_s * 60.0f / (2.0f * M_PI);
 
   // --- PID 控制 ---
-  foc->iq_ref =
-      FOC_PID_Compute(&foc->speed_pid, foc->speed_ref, foc->speed_mech_rpm);
+  // foc->iq_ref =
+  //     FOC_PID_Compute(&foc->speed_pid, foc->speed_ref, foc->speed_now_rpm);
 
   // 限幅 iq_ref
   if (foc->iq_ref > MOTOR_MAX_CURRENT)
@@ -140,10 +101,10 @@ void FOC_PositionLoop_Update(FOC_Controller_t *foc) {
   if (BSP_KTH7823_ReadAngle(foc->encoder, &pos_now) != KTH7823_OK)
     return;
 
-  foc->position_mech_deg = pos_now;
+  foc->pos_out_deg = pos_now;
 
   /* 单圈最短路径误差 */
-  float err = foc->position_ref - foc->position_mech_deg;
+  float err = foc->position_ref - foc->pos_out_deg;
   if (err > 180.0f)
     err -= 360.0f;
   if (err < -180.0f)

@@ -17,9 +17,8 @@ typedef struct {
 } phase_current_t;
 
 typedef struct {
-  float input_voltage;           // 输入电压
-  phase_current_t phase_current; // 三相电流
-  temp_t temp;                   // 一行搞定所有温度
+  float input_voltage; // 输入电压
+  temp_t temp;         // 一行搞定所有温度
 } analogdata_t;
 
 extern analogdata_t analogdata;

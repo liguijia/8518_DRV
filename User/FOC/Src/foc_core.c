@@ -1,11 +1,9 @@
-#include <math.h>
-
-#include "analog_signal.h"
-#include "bsp_pwm.h"
 #include "foc_core.h"
-#include "foc_pid.h"
-
+#include "analog_signal.h"
 #include "arm_math.h"
+#include "bsp_pwm.h"
+#include "foc_pid.h"
+#include <math.h>
 
 #define SQRT3_BY_2 0.86602540378f
 
@@ -66,30 +64,33 @@ void SVPWM_Offset_Float(const alpha_beta_t *volt, FOC_PWM_t *pwm) {
 FOC_PID_ctrl_t id_pid;
 FOC_PID_ctrl_t iq_pid;
 
-void FOC_UpdatePWM(const phase_current_t *i_abc, float theta_e, FOC_PWM_t *pwm,
-                   FOC_PID_ctrl_t *id_pid, float id_ref, FOC_PID_ctrl_t *iq_pid,
-                   float iq_ref) {
+void FOC_UpdatePWM(FOC_Controller_t *foc) {
   alpha_beta_t i_alpha_beta;
   dq_t i_dq;
   dq_t v_dq;
   alpha_beta_t v_alpha_beta;
 
   // 1. Clarke 变换
-  Clarke(i_abc, &i_alpha_beta);
+  Clarke(&foc->phase_current, &i_alpha_beta);
 
   // 2. Park 变换
-  Park(&i_alpha_beta, theta_e, &i_dq);
+  Park(&i_alpha_beta, foc->theta_e, &i_dq);
 
-  // 3. PI 控制器计算 dq 电压
-  v_dq.d = FOC_PID_Compute(id_pid, i_dq.d, id_ref); /* vd = 电流 d 轴控制 */
-  v_dq.q = FOC_PID_Compute(iq_pid, i_dq.q, iq_ref); /* vq = 电流 q 轴控制 */
+  // 3. 电流环控制
+  v_dq.d = FOC_PID_Compute(&foc->id_pid, foc->id_ref, i_dq.d); // d轴
+  v_dq.q = FOC_PID_Compute(&foc->iq_pid, foc->iq_ref, i_dq.q); // q轴
 
-  // 4. 逆 Park
-  InvPark(&v_dq, theta_e, &v_alpha_beta);
+  // 4. 逆Park变换
+  InvPark(&v_dq, foc->theta_e, &v_alpha_beta);
+  float Vbus = analogdata.input_voltage;
+  if (Vbus > 1.0f) {
+    float scale = 1.0f / Vbus;
+    v_alpha_beta.alpha *= scale;
+    v_alpha_beta.beta *= scale;
+  }
+  // 5. SVPWM + 偏置补偿
+  SVPWM_Offset_Float(&v_alpha_beta, &foc->pwm);
 
-  // 5. SVPWM Offset 生成 PWM
-  SVPWM_Offset_Float(&v_alpha_beta, pwm);
-
-  // 6. 应用 PWM
-  BSP_PWM_Set_Duty(pwm);
+  // 6. 输出PWM占空比
+  BSP_PWM_Set_Duty(&foc->pwm);
 }

@@ -69,16 +69,22 @@ uint8_t BSP_KTH7823_WriteRegister(KTH7823_HandleTypeDef *hdev, uint8_t reg_addr,
                  ((uint16_t)reg_value & 0xFFu);
 
   BSP_KTH7823_CS_Enable(hdev);
-  uint16_t resp = BSP_KTH7823_SPI_Transfer16(hdev, cmd);
+
+  /* 第一次传输：写命令（返回无意义） */
+  (void)BSP_KTH7823_SPI_Transfer16(hdev, cmd);
+
+  /* 第二次传输：读取状态响应 */
+  uint16_t resp = BSP_KTH7823_SPI_Transfer16(hdev, 0x0000);
+
   BSP_KTH7823_CS_Disable(hdev);
 
+  /* 检查返回状态 */
   if (resp == 0xFFFFu)
     return KTH7823_ERROR;
 
-  /* 短暂延时做读回验证 */
+  /* 短延时再读回验证 */
   HAL_Delay(5);
 
-  /* 读回校验（可选） */
   uint8_t read_back = 0;
   if (BSP_KTH7823_ReadRegister(hdev, reg_addr, &read_back) != KTH7823_OK)
     return KTH7823_ERROR;

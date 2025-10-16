@@ -18,6 +18,6 @@
 #define FOC_DT_POSITION 0.001f    // 位置环周期 1 kHz
 
 /* ----------------- 默认初始值 ----------------- */
-#define MOTOR_DEFAULT_ZERO_ANGLE 0.0f // 机械零点角度
+#define MOTOR_DEFAULT_ZERO_ANGLE 0.0f // 机械零点角度(角度°)
 
 #endif /* __MOTOR_CONFIG_H__ */
