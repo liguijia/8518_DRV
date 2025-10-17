@@ -10,20 +10,33 @@
 
 /* ----------------- 结构体定义 ----------------- */
 
+/**
+ * @brief FOC 系统运行状态
+ */
+typedef enum {
+  FOC_STATE_IDLE = 0,        ///< 系统空闲，未准备好运行
+  FOC_STATE_CALIBRATING,     ///< 正在进行零点校准
+  FOC_STATE_READY,           ///< 硬件和校准完成，准备进入闭环
+  FOC_STATE_RUNNING_CURRENT, ///< 正在运行电流环
+  FOC_STATE_RUNNING_SPEED,   ///< 正在运行速度/位置环
+  FOC_STATE_FAULT            ///< 系统发生故障
+} FOC_Status_t;
+
+/**
+ * @brief FOC 控制器句柄
+ */
 typedef struct {
   // === 电流测量 ===
   phase_current_t phase_current; ///< 三相电流 A, B, C
-
+  // === 编码器句柄 ===
+  KTH7823_HandleTypeDef *encoder;
   // === 电流环 PID ===
   FOC_PID_ctrl_t id_pid;
   FOC_PID_ctrl_t iq_pid;
-
   // === 速度环 PID ===
   FOC_PID_ctrl_t speed_pid;
-
   // === 位置环 PID ===
   FOC_PID_ctrl_t position_pid;
-
   // === 速度估算器 ===
   PLL_Handle speed_pll;
 
@@ -47,8 +60,9 @@ typedef struct {
   // === PWM 输出 ===
   FOC_PWM_t pwm;
 
-  // === 编码器句柄 ===
-  KTH7823_HandleTypeDef *encoder;
+  // === 系统状态 ===
+  FOC_Status_t status;
+
 } FOC_Controller_t;
 
 extern FOC_Controller_t foc;

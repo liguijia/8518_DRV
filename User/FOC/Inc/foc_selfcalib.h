@@ -11,6 +11,7 @@ extern "C" {
  * @brief 电机自校准配置结构
  */
 typedef struct {
+  float align_voltage; ///< 对齐电压 (V)
   float align_current; ///< 对齐电流 (A)
   float align_time;    ///< 对齐时间 (s)
 } FOC_SelfCalib_Config_t;

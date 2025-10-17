@@ -25,15 +25,15 @@ void FOC_Controller_Init(FOC_Controller_t *foc, KTH7823_HandleTypeDef *encoder,
   foc->pos_out_deg = 0.0f;
 
   // 电流环 PID
-  FOC_PID_Init(&foc->id_pid, FOC_PID_TYPE_PI, 0.0525f, 0.0005f, 0.0f,
-               dt_current, 10.0f, 5.0f, 0.001f);
-  FOC_PID_Init(&foc->iq_pid, FOC_PID_TYPE_PI, 0.125f, 0.075f, 0.0f, dt_current,
-               10.0f, 30.0f, 0.001f);
+  FOC_PID_Init(&foc->id_pid, FOC_PID_TYPE_PI, 0.0525f, 0.05f, 0.0f, dt_current,
+               10.0f, 5.0f, 0.001f);
+  FOC_PID_Init(&foc->iq_pid, FOC_PID_TYPE_PI, 0.0850f, 0.055f, 0.0f, dt_current,
+               10.0f, 50.0f, 0.001f);
   // 速度环 PLL
   PLL_Init(&foc->speed_pll, 27.5f, 12.5f, dt_speed);
   // 速度环 PID
   FOC_PID_Init(&foc->speed_pid, FOC_PID_TYPE_PI, 0.075f, 0.025f, 0.0f, dt_speed,
-               10.0f, 20.0f, 0.001f);
+               10.0f, 120.0f, 0.001f);
 
   // 位置环 PID
   FOC_PID_Init(&foc->position_pid, FOC_PID_TYPE_PI, 1.25f, 0.005f, 0.0f,
@@ -82,8 +82,8 @@ void FOC_PLLSpeedLoop_Update(FOC_Controller_t *foc) {
   foc->speed_now_rpm = speed_rad_s * 60.0f / (2.0f * M_PI);
 
   // --- PID 控制 ---
-  // foc->iq_ref =
-  //     FOC_PID_Compute(&foc->speed_pid, foc->speed_ref, foc->speed_now_rpm);
+  foc->iq_ref =
+      FOC_PID_Compute(&foc->speed_pid, foc->speed_ref, foc->speed_now_rpm);
 
   // 限幅 iq_ref
   if (foc->iq_ref > MOTOR_MAX_CURRENT)

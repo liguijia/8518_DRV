@@ -8,6 +8,9 @@ typedef struct {
   float c;
 } FOC_PWM_t;
 
+extern void BSP_PWM_Start(void);
+extern void BSP_PWM_Stop(void);
+extern void BSP_PWM_Halt(void);
 extern void BSP_PWM_Init(void);
 extern void BSP_PWM_Set_Duty(const FOC_PWM_t *duty);
 

@@ -18,12 +18,17 @@ void BSP_PWM_Set_Duty(const FOC_PWM_t *duty) {
   __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, (uint16_t)duty_to_ccr(duty->b));
   __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_3, (uint16_t)duty_to_ccr(duty->c));
 }
+void BSP_PWM_Halt(void) {
+  BSP_PWM_Set_Duty(&initial_pwm_duty);     // 初始占空比为 0
+  HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_1); // 通道 1
+  HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_2); // 通道 2
+  HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_3); // 通道 3
 
-void BSP_PWM_Init() {
-  // 启动 TIM1 的 3 个通道和它们的互补通道
-  HAL_TIM_Base_Start(&htim1);
-  HAL_TIM_Base_Start_IT(&htim1);
-
+  HAL_TIMEx_PWMN_Stop(&htim1, TIM_CHANNEL_1); // 互补通道 1
+  HAL_TIMEx_PWMN_Stop(&htim1, TIM_CHANNEL_2); // 互补通道 2
+  HAL_TIMEx_PWMN_Stop(&htim1, TIM_CHANNEL_3); // 互补通道 3
+}
+void BSP_PWM_Start(void) {
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1); // 通道 1
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2); // 通道 2
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3); // 通道 3
@@ -31,11 +36,8 @@ void BSP_PWM_Init() {
   HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_1); // 互补通道 1
   HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_2); // 互补通道 2
   HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_3); // 互补通道 3
-
-  BSP_PWM_Set_Duty(&initial_pwm_duty); // 初始占空比为 0
 }
-
-void BSP_PWM_Stop() {
+void BSP_PWM_Stop(void) {
   BSP_PWM_Set_Duty(&initial_pwm_duty);     // 初始占空比为 0
   HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_1); // 通道 1
   HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_2); // 通道 2
@@ -47,4 +49,11 @@ void BSP_PWM_Stop() {
 
   HAL_TIM_Base_Stop_IT(&htim1);
   HAL_TIM_Base_Stop(&htim1);
+}
+void BSP_PWM_Init(void) {
+  // 启动 TIM1 的 3 个通道和它们的互补通道
+  HAL_TIM_Base_Start(&htim1);
+  HAL_TIM_Base_Start_IT(&htim1);
+  BSP_PWM_Start();
+  BSP_PWM_Set_Duty(&initial_pwm_duty); // 初始占空比为 0
 }
