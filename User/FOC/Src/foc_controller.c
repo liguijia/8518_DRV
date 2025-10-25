@@ -32,8 +32,8 @@ void FOC_Controller_Init(FOC_Controller_t *foc, KTH7823_HandleTypeDef *encoder,
   // 速度环 PLL
   PLL_Init(&foc->speed_pll, 27.5f, 12.5f, dt_speed);
   // 速度环 PID
-  FOC_PID_Init(&foc->speed_pid, FOC_PID_TYPE_PI, 0.075f, 0.025f, 0.0f, dt_speed,
-               10.0f, 120.0f, 0.001f);
+  FOC_PID_Init(&foc->speed_pid, FOC_PID_TYPE_PI, 0.125f, 0.025f, 0.0f, dt_speed,
+               10.0f, 150.0f, 0.001f);
 
   // 位置环 PID
   FOC_PID_Init(&foc->position_pid, FOC_PID_TYPE_PI, 1.25f, 0.005f, 0.0f,
