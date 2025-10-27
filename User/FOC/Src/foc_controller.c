@@ -5,6 +5,13 @@
 
 #define TWO_PI 6.28318530718f
 // constexpr float PI = 3.14159265359f;
+static inline float norm_rad(float x) {
+  while (x < 0.0f)
+    x += TWO_PI;
+  while (x >= TWO_PI)
+    x -= TWO_PI;
+  return x;
+}
 
 /* ----------------- 初始化 ----------------- */
 void FOC_Controller_Init(FOC_Controller_t *foc, KTH7823_HandleTypeDef *encoder,
@@ -25,15 +32,15 @@ void FOC_Controller_Init(FOC_Controller_t *foc, KTH7823_HandleTypeDef *encoder,
   foc->pos_out_deg = 0.0f;
 
   // 电流环 PID
-  FOC_PID_Init(&foc->id_pid, FOC_PID_TYPE_PI, 0.0525f, 0.05f, 0.0f, dt_current,
+  FOC_PID_Init(&foc->id_pid, FOC_PID_TYPE_PI, 0.0f, 0.0f, 0.0f, dt_current,
                10.0f, 5.0f, 0.001f);
-  FOC_PID_Init(&foc->iq_pid, FOC_PID_TYPE_PI, 0.0850f, 0.055f, 0.0f, dt_current,
+  FOC_PID_Init(&foc->iq_pid, FOC_PID_TYPE_PI, 0.0850f, 0.075f, 0.0f, dt_current,
                10.0f, 50.0f, 0.001f);
   // 速度环 PLL
   PLL_Init(&foc->speed_pll, 27.5f, 12.5f, dt_speed);
   // 速度环 PID
-  FOC_PID_Init(&foc->speed_pid, FOC_PID_TYPE_PI, 0.125f, 0.025f, 0.0f, dt_speed,
-               10.0f, 150.0f, 0.001f);
+  FOC_PID_Init(&foc->speed_pid, FOC_PID_TYPE_PI, 0.25f, 0.75f, 0.0f, dt_speed,
+               20.0f, MOTOR_MAX_CURRENT, 0.001f);
 
   // 位置环 PID
   FOC_PID_Init(&foc->position_pid, FOC_PID_TYPE_PI, 1.25f, 0.005f, 0.0f,
@@ -46,30 +53,31 @@ void FOC_CurrentLoop_Update(FOC_Controller_t *foc) {
     return;
 
   // 读取编码器角度
+  // 注意：如果您的电流环执行频率极高，此处的SPI读取可能会造成延时，应考虑将角度读取放在定时器更新中断中。
   if (BSP_KTH7823_ReadAngle(foc->encoder, &foc->pos_now_deg) != KTH7823_OK)
     return;
 
-  // 转成弧度 (0..2π)
+  // 1. 转成机械弧度 (0..2π)
   float mech_rad = foc->pos_now_deg * TWO_PI / 360.0f;
 
-  // 加上零点校准偏移
-  mech_rad -= foc->zero_offset_rad;
-  if (mech_rad < 0.0f)
-    mech_rad += TWO_PI;
+  // 2. 机械角度转电角度
+  float elec_rad = mech_rad * MOTOR_POLE_PAIRS;
 
-  // 电角度 = 机械角度 * 极对数
-  foc->theta_e = fmodf(mech_rad * MOTOR_POLE_PAIRS, TWO_PI);
+  // 在电角度域应用零点校准偏移
+  // foc->zero_offset_rad 是一个电角度值。
+  elec_rad += foc->zero_offset_rad;
 
-  // 调用电流环控制算法
+  // 4. 归一化电角度 (0..2π)
+  foc->theta_e = norm_rad(elec_rad);
+
+  // 5. 调用电流环控制算法
+  // foc->theta_e 现在是经过零点修正的准确电角度
   FOC_UpdatePWM(foc);
 }
 
 /* ----------------- 速度环 ----------------- */
 void FOC_PLLSpeedLoop_Update(FOC_Controller_t *foc) {
   if (!foc)
-    return;
-
-  if (BSP_KTH7823_ReadAngle(foc->encoder, &foc->pos_now_deg) != KTH7823_OK)
     return;
 
   // --- 角度转换为弧度 ---

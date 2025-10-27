@@ -9,7 +9,7 @@
 #define MOTOR_PHASE_INDUCTANCE 0.000108f // 相电感 (H)
 #define MOTOR_BACK_EMF_CONST 0.177f      // 反电动势常数 (V/rad/s)
 #define MOTOR_TORQUE_CONST 0.152f        // 转矩常数 (Nm/A)
-#define MOTOR_MAX_CURRENT 150.0f         // 最大电流 (A)
+#define MOTOR_MAX_CURRENT 180.0f         // 最大电流 (A)
 #define MOTOR_MAX_VOLTAGE 24.0f          // 最大电压 (V)
 
 /* ----------------- FOC 控制参数 ----------------- */
