@@ -17,29 +17,38 @@
 #include "foc_openloop.h"
 #include "foc_selfcalib.h"
 #include "motor_config.h"
+#include "ramp_control.h"
+//
+KTH7823_HandleTypeDef henc1;
+FOC_Controller_t foc;
 
-// 测试用的 iq 参考值
+FOC_OpenLoop_t openloop;
+
+// 测试用的参考值
 float test_iq = 0.0f;
 float test_id = 0.0f;
 float test_speed = 100.0f;
 float test_pos = 100.0f;
-//
+// 自校准句柄和配置
 FOC_SelfCalib_Handle_t calib_handle;
-uint8_t set_enc_zero = 0;
-//
-KTH7823_HandleTypeDef henc1;
-FOC_Controller_t foc;
-//
-FOC_OpenLoop_t openloop;
-FOC_PWM_t pwm;
-
-// 初始化函数
+FOC_SelfCalib_Config_t calib_cfg = {
+    .align_voltage = 1.5f, // 2.5V 对齐电压
+    .align_current = 0.0f, // 电压模式下忽略电流
+    .align_time = 1.0f     // 0.5 秒对齐时间
+};
+// 全局斜坡函数句柄
+RampFunction_t speed_ramp;
+float current_speed_ref = 0.0f; // 实际 FOC 速度环参考值
+/*
+  应用主初始化函数
+*/
 void App_Main_Init(void) {
   // 初始化外设
   BSP_FDCAN_Init();
   BSP_Flash_Init();
   BSP_KTH7823_Init(&henc1, &hspi1, SPI1_CS_GPIO_Port, SPI1_CS_Pin, 0,
                    KTH7823_CW);
+
   BSP_PWM_Init();
   AnalogSignal_Process_Init();
 
@@ -47,22 +56,23 @@ void App_Main_Init(void) {
   FOC_Controller_Init(&foc, &henc1, FOC_DT_CURRENT, FOC_DT_SPEED,
                       FOC_DT_POSITION);
   //
-  FOC_SelfCalib_Config_t calib_cfg = {
-      .align_voltage = 1.5f, // 2.5V 对齐电压
-      .align_current = 0.0f, // 电压模式下忽略电流
-      .align_time = 1.0f     // 0.5 秒对齐时间
-  };
-  FOC_SelfCalib_Init(&calib_handle, &calib_cfg);
+  RampFunction_Init(&speed_ramp, 0.0f, 0.0f, 750.0f, RAMP_TYPE_LINEAR);
+
+  // 自校准
+  // FOC_SelfCalib_Init(&calib_handle, &calib_cfg);
   // FOC_SelfCalib_Execute(&foc, &calib_handle);
-  BSP_PWM_Start();
+
   //
+  BSP_PWM_Start();
   HAL_TIM_Base_Start_IT(&htim6);
   HAL_TIM_Base_Start_IT(&htim3);
-
+  //
   BSP_BreathLED_Init();
 }
 
-// 主循环
+/*
+  应用主循环函数
+*/
 void App_Main_Loop(void) {
   // 设置一个固定的 iq 参考值用于测试
   // FOC_Controller_SetIdIq(&foc, test_id, test_iq);
@@ -74,7 +84,11 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
     // FOC_PositionLoop_Update(&foc);
   }
   if (htim->Instance == TIM3) {
-    FOC_Controller_SetSpeed(&foc, test_speed); // 设置一个初始速度参考值
+    if (speed_ramp.target_value != test_speed) {
+      speed_ramp.target_value = test_speed;
+    }
+    current_speed_ref = RampFunction_Update(&speed_ramp, FOC_DT_SPEED);
+    FOC_Controller_SetSpeed(&foc, current_speed_ref); // 设置一个初始速度参考值
     FOC_PLLSpeedLoop_Update(&foc);
   }
 }
