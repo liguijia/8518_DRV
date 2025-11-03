@@ -44,6 +44,7 @@ target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
 file(GLOB_RECURSE USER_SOURCES 
     "User/BSP/Src/*.c"
     "User/FOC/Src/*.c"
+    "User/FOC/ENCODER/Src/*.c"
     "User/COMM/Src/*.c"
     "User/APP/Src/*.c"
 )
@@ -58,6 +59,7 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     "User/BSP/Inc"
     "User/FOC/Inc"
     "User/FOC"
+    "User/FOC/ENCODER/Inc"
     "User/COMM/Inc"
     "User/APP/Inc"
 )

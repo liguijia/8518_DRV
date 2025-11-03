@@ -1,4 +1,5 @@
 #include "foc_controller.h"
+#include "encoder.h"
 #include "foc_core.h"
 #include "motor_config.h"
 #include <math.h>
@@ -12,14 +13,12 @@ static inline float norm_rad(float x) {
     x -= TWO_PI;
   return x;
 }
-
+extern KTH7823_HandleTypeDef henc1;
 /* ----------------- 初始化 ----------------- */
-void FOC_Controller_Init(FOC_Controller_t *foc, KTH7823_HandleTypeDef *encoder,
-                         float dt_current, float dt_speed, float dt_position) {
-  if (!foc || !encoder)
+void FOC_Controller_Init(FOC_Controller_t *foc, float dt_current,
+                         float dt_speed, float dt_position) {
+  if (!foc)
     return;
-
-  foc->encoder = encoder;
   foc->id_ref = 0.0f;
   foc->iq_ref = 0.0f;
   foc->speed_ref = 0.0f;
@@ -54,7 +53,7 @@ void FOC_CurrentLoop_Update(FOC_Controller_t *foc) {
 
   // 读取编码器角度
   // 注意：如果您的电流环执行频率极高，此处的SPI读取可能会造成延时，应考虑将角度读取放在定时器更新中断中。
-  if (BSP_KTH7823_ReadAngle(foc->encoder, &foc->pos_now_deg) != KTH7823_OK)
+  if (Encoder_ReadAngle(&kth7823_encoder, &foc->pos_now_deg) != ENCODER_OK)
     return;
 
   // 1. 转成机械弧度 (0..2π)
@@ -104,12 +103,8 @@ void FOC_PLLSpeedLoop_Update(FOC_Controller_t *foc) {
 void FOC_PositionLoop_Update(FOC_Controller_t *foc) {
   if (!foc)
     return;
-
-  float pos_now;
-  if (BSP_KTH7823_ReadAngle(foc->encoder, &pos_now) != KTH7823_OK)
+  if (Encoder_ReadAngle(&kth7823_encoder, &foc->pos_out_deg) != ENCODER_OK)
     return;
-
-  foc->pos_out_deg = pos_now;
 
   /* 单圈最短路径误差 */
   float err = foc->position_ref - foc->pos_out_deg;

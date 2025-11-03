@@ -1,4 +1,4 @@
-#include "bsp_kth7823.h"
+#include "kth7823.h"
 #include <string.h>
 
 /* 超时时间 (ms) */
@@ -9,16 +9,16 @@
 /* ----------------- 私有工具函数 ----------------- */
 
 /* CS 操作 */
-static inline void BSP_KTH7823_CS_Enable(KTH7823_HandleTypeDef *hdev) {
+static inline void KTH7823_CS_Enable(KTH7823_HandleTypeDef *hdev) {
   HAL_GPIO_WritePin(hdev->cs_port, hdev->cs_pin, GPIO_PIN_RESET);
 }
-static inline void BSP_KTH7823_CS_Disable(KTH7823_HandleTypeDef *hdev) {
+static inline void KTH7823_CS_Disable(KTH7823_HandleTypeDef *hdev) {
   HAL_GPIO_WritePin(hdev->cs_port, hdev->cs_pin, GPIO_PIN_SET);
 }
 
 /* 通过 SPI 传输 16-bit（高字节先发），返回 16-bit 响应（高字节在 rx[0]） */
-static uint16_t BSP_KTH7823_SPI_Transfer16(KTH7823_HandleTypeDef *hdev,
-                                           uint16_t tx_word) {
+static uint16_t KTH7823_SPI_Transfer16(KTH7823_HandleTypeDef *hdev,
+                                       uint16_t tx_word) {
   uint8_t tx[2], rx[2];
   tx[0] = (uint8_t)((tx_word >> 8) & 0xFF); /* 高字节先发 */
   tx[1] = (uint8_t)(tx_word & 0xFF);
@@ -36,20 +36,20 @@ static uint16_t BSP_KTH7823_SPI_Transfer16(KTH7823_HandleTypeDef *hdev,
 /* ----------------- 寄存器读写实现 ----------------- */
 
 /* 读寄存器 (8-bit)，返回高8位为数据（设备协议） */
-uint8_t BSP_KTH7823_ReadRegister(KTH7823_HandleTypeDef *hdev, uint8_t reg_addr,
-                                 uint8_t *reg_value) {
+uint8_t KTH7823_ReadRegister(KTH7823_HandleTypeDef *hdev, uint8_t reg_addr,
+                             uint8_t *reg_value) {
   if (hdev == NULL || reg_value == NULL)
     return KTH7823_ERROR;
 
   uint16_t cmd = (0x01u << 14) | ((uint16_t)(reg_addr & 0x3Fu) << 8);
 
-  BSP_KTH7823_CS_Enable(hdev);
+  KTH7823_CS_Enable(hdev);
 
   /* 发送读命令（返回无用或状态），然后再发一次接收数据 */
-  (void)BSP_KTH7823_SPI_Transfer16(hdev, cmd);
-  uint16_t resp = BSP_KTH7823_SPI_Transfer16(hdev, 0x0000);
+  (void)KTH7823_SPI_Transfer16(hdev, cmd);
+  uint16_t resp = KTH7823_SPI_Transfer16(hdev, 0x0000);
 
-  BSP_KTH7823_CS_Disable(hdev);
+  KTH7823_CS_Disable(hdev);
 
   if (resp == 0xFFFFu)
     return KTH7823_ERROR;
@@ -60,23 +60,23 @@ uint8_t BSP_KTH7823_ReadRegister(KTH7823_HandleTypeDef *hdev, uint8_t reg_addr,
 }
 
 /* 写寄存器 (8-bit) */
-uint8_t BSP_KTH7823_WriteRegister(KTH7823_HandleTypeDef *hdev, uint8_t reg_addr,
-                                  uint8_t reg_value) {
+uint8_t KTH7823_WriteRegister(KTH7823_HandleTypeDef *hdev, uint8_t reg_addr,
+                              uint8_t reg_value) {
   if (hdev == NULL)
     return KTH7823_ERROR;
 
   uint16_t cmd = (0x02u << 14) | ((uint16_t)(reg_addr & 0x3Fu) << 8) |
                  ((uint16_t)reg_value & 0xFFu);
 
-  BSP_KTH7823_CS_Enable(hdev);
+  KTH7823_CS_Enable(hdev);
 
   /* 第一次传输：写命令（返回无意义） */
-  (void)BSP_KTH7823_SPI_Transfer16(hdev, cmd);
+  (void)KTH7823_SPI_Transfer16(hdev, cmd);
 
   /* 第二次传输：读取状态响应 */
-  uint16_t resp = BSP_KTH7823_SPI_Transfer16(hdev, 0x0000);
+  uint16_t resp = KTH7823_SPI_Transfer16(hdev, 0x0000);
 
-  BSP_KTH7823_CS_Disable(hdev);
+  KTH7823_CS_Disable(hdev);
 
   /* 检查返回状态 */
   if (resp == 0xFFFFu)
@@ -86,7 +86,7 @@ uint8_t BSP_KTH7823_WriteRegister(KTH7823_HandleTypeDef *hdev, uint8_t reg_addr,
   HAL_Delay(5);
 
   uint8_t read_back = 0;
-  if (BSP_KTH7823_ReadRegister(hdev, reg_addr, &read_back) != KTH7823_OK)
+  if (KTH7823_ReadRegister(hdev, reg_addr, &read_back) != KTH7823_OK)
     return KTH7823_ERROR;
   if (read_back != reg_value)
     return KTH7823_ERROR;
@@ -95,23 +95,23 @@ uint8_t BSP_KTH7823_WriteRegister(KTH7823_HandleTypeDef *hdev, uint8_t reg_addr,
 }
 
 /* 锁定寄存器（写 WRDIS = 1） */
-uint8_t BSP_KTH7823_LockRegisters(KTH7823_HandleTypeDef *hdev) {
-  return BSP_KTH7823_WriteRegister(hdev, KTH7823_REG_WRDIS, 0x01u);
+uint8_t KTH7823_LockRegisters(KTH7823_HandleTypeDef *hdev) {
+  return KTH7823_WriteRegister(hdev, KTH7823_REG_WRDIS, 0x01u);
 }
 
 /* ----------------- 角度读取 ----------------- */
 
 /* 读取原始 16-bit 角度寄存器（返回 16-bit 数据） */
-uint8_t BSP_KTH7823_ReadRaw(KTH7823_HandleTypeDef *hdev, uint16_t *angle_raw) {
+uint8_t KTH7823_ReadRaw(KTH7823_HandleTypeDef *hdev, uint16_t *angle_raw) {
   if (hdev == NULL || angle_raw == NULL)
     return KTH7823_ERROR;
 
-  BSP_KTH7823_CS_Enable(hdev);
+  KTH7823_CS_Enable(hdev);
 
   /* 读取角度命令：0x0000 (根据器件手册) */
-  uint16_t resp = BSP_KTH7823_SPI_Transfer16(hdev, 0x0000);
+  uint16_t resp = KTH7823_SPI_Transfer16(hdev, 0x0000);
 
-  BSP_KTH7823_CS_Disable(hdev);
+  KTH7823_CS_Disable(hdev);
 
   if (resp == 0xFFFFu)
     return KTH7823_ERROR;
@@ -122,9 +122,9 @@ uint8_t BSP_KTH7823_ReadRaw(KTH7823_HandleTypeDef *hdev, uint16_t *angle_raw) {
 }
 
 /* 读取角度并转换为度 (0..360) */
-uint8_t BSP_KTH7823_ReadAngle(KTH7823_HandleTypeDef *hdev, float *angle_deg) {
+uint8_t KTH7823_ReadAngle(KTH7823_HandleTypeDef *hdev, float *angle_deg) {
   uint16_t raw;
-  if (BSP_KTH7823_ReadRaw(hdev, &raw) != KTH7823_OK)
+  if (KTH7823_ReadRaw(hdev, &raw) != KTH7823_OK)
     return KTH7823_ERROR;
 
   /* 16-bit -> 0..360 mapping (65536 steps) */
@@ -138,17 +138,17 @@ uint8_t BSP_KTH7823_ReadAngle(KTH7823_HandleTypeDef *hdev, float *angle_deg) {
 /* ----------------- 高级功能 ----------------- */
 
 /* 设置零点（写 Z_LOW / Z_HIGH） */
-uint8_t BSP_KTH7823_SetZeroPosition(KTH7823_HandleTypeDef *hdev,
-                                    uint16_t zero_offset) {
+uint8_t KTH7823_SetZeroPosition(KTH7823_HandleTypeDef *hdev,
+                                uint16_t zero_offset) {
   if (hdev == NULL)
     return KTH7823_ERROR;
 
   uint8_t low = (uint8_t)(zero_offset & 0xFFu);
   uint8_t high = (uint8_t)((zero_offset >> 8) & 0xFFu);
 
-  if (BSP_KTH7823_WriteRegister(hdev, KTH7823_REG_Z_LOW, low) != KTH7823_OK)
+  if (KTH7823_WriteRegister(hdev, KTH7823_REG_Z_LOW, low) != KTH7823_OK)
     return KTH7823_ERROR;
-  if (BSP_KTH7823_WriteRegister(hdev, KTH7823_REG_Z_HIGH, high) != KTH7823_OK)
+  if (KTH7823_WriteRegister(hdev, KTH7823_REG_Z_HIGH, high) != KTH7823_OK)
     return KTH7823_ERROR;
 
   /* 如果 Z 写入需要额外时间保证 NVM 编程，则上层可再延时 */
@@ -157,13 +157,13 @@ uint8_t BSP_KTH7823_SetZeroPosition(KTH7823_HandleTypeDef *hdev,
 }
 
 /* 设置旋转方向：读取寄存器 0x10，修改 bit0，写回 */
-uint8_t BSP_KTH7823_SetRotationDirection(KTH7823_HandleTypeDef *hdev,
-                                         uint8_t direction) {
+uint8_t KTH7823_SetRotationDirection(KTH7823_HandleTypeDef *hdev,
+                                     uint8_t direction) {
   if (hdev == NULL)
     return KTH7823_ERROR;
 
   uint8_t rd = 0;
-  if (BSP_KTH7823_ReadRegister(hdev, 0x10, &rd) != KTH7823_OK)
+  if (KTH7823_ReadRegister(hdev, 0x10, &rd) != KTH7823_OK)
     return KTH7823_ERROR;
 
   if (direction == KTH7823_CW)
@@ -171,15 +171,15 @@ uint8_t BSP_KTH7823_SetRotationDirection(KTH7823_HandleTypeDef *hdev,
   else
     rd &= ~0x01u;
 
-  if (BSP_KTH7823_WriteRegister(hdev, 0x10, rd) != KTH7823_OK)
+  if (KTH7823_WriteRegister(hdev, 0x10, rd) != KTH7823_OK)
     return KTH7823_ERROR;
   return KTH7823_OK;
 }
 
 /* 计算零点寄存器值（更直观的实现） */
-uint16_t BSP_KTH7823_CalculateZeroValue(uint16_t current_angle,
-                                        uint16_t desired_zero_deg,
-                                        uint8_t direction) {
+uint16_t KTH7823_CalculateZeroValue(uint16_t current_angle,
+                                    uint16_t desired_zero_deg,
+                                    uint8_t direction) {
   /* 把 desired_zero_deg(0..360) 映射到 0..65535 */
   uint32_t desired_raw =
       (uint32_t)((uint32_t)desired_zero_deg * 65536UL / 360UL);
@@ -203,9 +203,9 @@ uint16_t BSP_KTH7823_CalculateZeroValue(uint16_t current_angle,
  *  - 尝试读取角度验证是否响应
  *  - 可选写入零点、设置方向
  */
-uint8_t BSP_KTH7823_Init(KTH7823_HandleTypeDef *hdev, SPI_HandleTypeDef *hspi,
-                         GPIO_TypeDef *cs_port, uint16_t cs_pin,
-                         uint16_t zero_offset, uint8_t direction_cw) {
+uint8_t KTH7823_Init(KTH7823_HandleTypeDef *hdev, SPI_HandleTypeDef *hspi,
+                     GPIO_TypeDef *cs_port, uint16_t cs_pin,
+                     uint16_t zero_offset, uint8_t direction_cw) {
   if (hdev == NULL || hspi == NULL)
     return KTH7823_ERROR;
 
@@ -217,17 +217,17 @@ uint8_t BSP_KTH7823_Init(KTH7823_HandleTypeDef *hdev, SPI_HandleTypeDef *hspi,
 
   /* 简单通信检测 */
   uint16_t raw;
-  if (BSP_KTH7823_ReadRaw(hdev, &raw) != KTH7823_OK)
+  if (KTH7823_ReadRaw(hdev, &raw) != KTH7823_OK)
     return KTH7823_ERROR;
 
   /* 可选写零点 */
   if (zero_offset != 0xFFFFu) {
-    if (BSP_KTH7823_SetZeroPosition(hdev, zero_offset) != KTH7823_OK)
+    if (KTH7823_SetZeroPosition(hdev, zero_offset) != KTH7823_OK)
       return KTH7823_ERROR;
   }
 
   /* 设置旋转方向 */
-  if (BSP_KTH7823_SetRotationDirection(hdev, direction_cw) != KTH7823_OK) {
+  if (KTH7823_SetRotationDirection(hdev, direction_cw) != KTH7823_OK) {
     /* 注意：如果方向寄存器读写失败，可考虑不把它当做致命错误 */
     return KTH7823_ERROR;
   }

@@ -10,19 +10,22 @@
 #include "app_main.h"
 #include "bsp_can.h"
 #include "bsp_flash.h"
-#include "bsp_kth7823.h"
 #include "bsp_led.h"
 #include "bsp_pwm.h"
+#include "encoder.h"
 #include "foc_controller.h"
 #include "foc_openloop.h"
 #include "foc_selfcalib.h"
+#include "kth7823.h"
 #include "motor_config.h"
 #include "ramp_control.h"
+
 //
 KTH7823_HandleTypeDef henc1;
 FOC_Controller_t foc;
-
+//
 FOC_OpenLoop_t openloop;
+//
 
 // 测试用的参考值
 float test_iq = 0.0f;
@@ -46,15 +49,17 @@ void App_Main_Init(void) {
   // 初始化外设
   BSP_FDCAN_Init();
   BSP_Flash_Init();
-  BSP_KTH7823_Init(&henc1, &hspi1, SPI1_CS_GPIO_Port, SPI1_CS_Pin, 0,
-                   KTH7823_CW);
+  // KTH7823_Init(&henc1, &hspi1, SPI1_CS_GPIO_Port, SPI1_CS_Pin, 0,
+  // KTH7823_CW);
 
-  BSP_PWM_Init();
+  Encoder_Register_Init(&kth7823_encoder, ENCODER_TYPE_KTH7823, &hspi1,
+                        SPI1_CS_GPIO_Port, SPI1_CS_Pin, 0xFFFF,
+                        KTH7823_CW); // 0xFFFF 表示跳过写入零点
   AnalogSignal_Process_Init();
+  BSP_PWM_Init();
 
   // 初始化 FOC 控制器
-  FOC_Controller_Init(&foc, &henc1, FOC_DT_CURRENT, FOC_DT_SPEED,
-                      FOC_DT_POSITION);
+  FOC_Controller_Init(&foc, FOC_DT_CURRENT, FOC_DT_SPEED, FOC_DT_POSITION);
   //
   RampFunction_Init(&speed_ramp, 0.0f, 0.0f, 750.0f, RAMP_TYPE_LINEAR);
 
@@ -62,6 +67,7 @@ void App_Main_Init(void) {
   // FOC_SelfCalib_Init(&calib_handle, &calib_cfg);
   // FOC_SelfCalib_Execute(&foc, &calib_handle);
 
+  foc.status = FOC_STATE_READY;
   //
   BSP_PWM_Start();
   HAL_TIM_Base_Start_IT(&htim6);
@@ -76,6 +82,10 @@ void App_Main_Init(void) {
 void App_Main_Loop(void) {
   // 设置一个固定的 iq 参考值用于测试
   // FOC_Controller_SetIdIq(&foc, test_id, test_iq);
+  BSP_LED_Status(LED_ON);
+  HAL_Delay(100);
+  BSP_LED_Status(LED_OFF);
+  HAL_Delay(100);
 }
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {

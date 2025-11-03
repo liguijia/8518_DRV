@@ -1,9 +1,10 @@
 #include "foc_selfcalib.h"
-#include "bsp_kth7823.h"
 #include "bsp_pwm.h"
 #include "foc_core.h"
+#include "kth7823.h"
 #include "motor_config.h"
 #include <math.h>
+
 /* 放到文件顶部（如果尚未定义） */
 #ifndef M_PI_2
 #define M_PI_2 (3.14159265358f / 2.0f)
@@ -11,7 +12,7 @@
 #ifndef TWO_PI
 #define TWO_PI (6.28318530718f)
 #endif
-
+extern KTH7823_HandleTypeDef henc1;
 /* ----------------- 辅助：将角度归一化到 [0, TWO_PI) ----------------- */
 static inline float norm_rad_2pi(float x) {
   while (x < 0.0f)
@@ -109,7 +110,7 @@ FOC_SelfCalib_State_t FOC_SelfCalib_Execute(FOC_Controller_t *foc,
   int got = 0;
   for (int i = 0; i < samples; ++i) {
     float deg;
-    if (BSP_KTH7823_ReadAngle(foc->encoder, &deg) == KTH7823_OK) {
+    if (KTH7823_ReadAngle(&henc1, &deg) == KTH7823_OK) {
       sum_deg += deg;
       ++got;
     }

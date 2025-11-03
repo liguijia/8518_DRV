@@ -2,11 +2,13 @@
 #define __FOC_CONTROLLER_H__
 
 #include "analog_signal.h"
-#include "bsp_kth7823.h"
 #include "bsp_pwm.h"
+#include "encoder.h"
 #include "foc_pid.h"
+#include "kth7823.h"
 #include "pll_speed_estimator.h"
 #include <stdbool.h>
+
 
 /* ----------------- 结构体定义 ----------------- */
 
@@ -28,8 +30,6 @@ typedef enum {
 typedef struct {
   // === 电流测量 ===
   phase_current_t phase_current; ///< 三相电流 A, B, C
-  // === 编码器句柄 ===
-  KTH7823_HandleTypeDef *encoder;
   // === 电流环 PID ===
   FOC_PID_ctrl_t id_pid;
   FOC_PID_ctrl_t iq_pid;
@@ -70,8 +70,8 @@ extern FOC_Controller_t foc;
 /* ----------------- 外部接口函数 ----------------- */
 
 // 初始化 FOC 控制器
-void FOC_Controller_Init(FOC_Controller_t *foc, KTH7823_HandleTypeDef *encoder,
-                         float dt_current, float dt_speed, float dt_position);
+void FOC_Controller_Init(FOC_Controller_t *foc, float dt_current,
+                         float dt_speed, float dt_position);
 
 // 电流环更新
 void FOC_CurrentLoop_Update(FOC_Controller_t *foc);
