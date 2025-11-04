@@ -4,6 +4,7 @@
 #include "string.h"
 // USER
 #include "bsp_can.h"
+#include "gm6020_ctrl.h"
 void BSP_FDCAN_SetRes(CAN_RES_STATUS status) {
   if (status == CAN_RES_ON) {
     HAL_GPIO_WritePin(CAN_RES_GPIO_Port, CAN_RES_Pin, GPIO_PIN_SET);
@@ -79,17 +80,13 @@ void BSP_FDCAN_SendMsg(uint16_t id, uint8_t *tx_data) {
   HAL_FDCAN_AddMessageToTxFifoQ(Can1TxFrame.hcan, &Can1_Txheader, tx_data);
 }
 /* ---------- FDCAN1 接收中断及回调 ---------- */
-static void FDCAN1_RxFifo0RxHandler(uint32_t *StdId, uint8_t Data[8]) {
-  if ((*StdId) >= 0x201 && (*StdId) <= 0x208) {
-  }
-}
 
 void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan,
                                uint32_t RxFifo0ITs) {
   if (hfdcan == &hfdcan1) {
     HAL_FDCAN_GetRxMessage(hfdcan, FDCAN_RX_FIFO0, &FDCAN1_RxFrame.Header,
                            FDCAN1_RxFrame.Data);
-    FDCAN1_RxFifo0RxHandler(&FDCAN1_RxFrame.Header.Identifier,
-                            FDCAN1_RxFrame.Data);
+    GM6020_CAN_RxCallback(FDCAN1_RxFrame.Header.Identifier,
+                          FDCAN1_RxFrame.Data);
   }
 }

@@ -19,6 +19,15 @@
 #include "kth7823.h"
 #include "motor_config.h"
 #include "ramp_control.h"
+// 6020test
+#include "gm6020_ctrl.h"
+GM6020_Handle_t gm6020_motor1, gm6020_motor5;
+GM6020_Handle_t *motors[] = {&gm6020_motor1, &gm6020_motor5}; // 电机数组
+static void gm6020_can_send(uint16_t id, uint8_t *data) {
+  BSP_FDCAN_SendMsg(id, data); // 注册现有CAN发送函数
+}
+float gm6020_test = 100.0f;
+// test
 
 //
 KTH7823_HandleTypeDef henc1;
@@ -42,6 +51,7 @@ FOC_SelfCalib_Config_t calib_cfg = {
 // 全局斜坡函数句柄
 RampFunction_t speed_ramp;
 float current_speed_ref = 0.0f; // 实际 FOC 速度环参考值
+
 /*
   应用主初始化函数
 */
@@ -56,6 +66,24 @@ void App_Main_Init(void) {
                         SPI1_CS_GPIO_Port, SPI1_CS_Pin, 0xFFFF,
                         KTH7823_CW); // 0xFFFF 表示跳过写入零点
   AnalogSignal_Process_Init();
+  //
+  GM6020_Init(&gm6020_motor1, 1, gm6020_can_send); // ID1，注册发送回调
+
+  // 配置PID参数（示例值，需根据实际调试）
+  GM6020_PID_Params_t speed_pid = {.kp = 0.0075f,
+                                   .ki = 0.00005f,
+                                   .kd = 0.0f,
+                                   .output_limit = 2.5f, // 最大输出电流2.5A
+                                   .integral_limit = 0.5f};
+  GM6020_PID_Params_t pos_pid = {.kp = 1.875f,
+                                 .ki = 0.00005f,
+                                 .kd = 0.0f,
+                                 .output_limit = 600.0f, // 最大输出转速600rpm
+                                 .integral_limit = 50.0f};
+  GM6020_SetPIDParams(&gm6020_motor1, &speed_pid, &pos_pid);
+  GM6020_SetMode(&gm6020_motor1, GM6020_MODE_POSITION);
+  GM6020_ManagerInit(motors, 1);
+  //
   BSP_PWM_Init();
 
   // 初始化 FOC 控制器
@@ -87,11 +115,16 @@ void App_Main_Loop(void) {
   BSP_LED_Status(LED_OFF);
   HAL_Delay(100);
 }
-
+/*
+  定时器中断回调函数
+*/
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
   if (htim->Instance == TIM6) {
     // FOC_Controller_SetPosition(&foc, test_pos);
     // FOC_PositionLoop_Update(&foc);
+    GM6020_SetTarget(&gm6020_motor1, gm6020_test);
+    GM6020_PIDCalculate();
+    GM6020_SendAll();
   }
   if (htim->Instance == TIM3) {
     if (speed_ramp.target_value != test_speed) {
