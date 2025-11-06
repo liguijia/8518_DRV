@@ -57,9 +57,10 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define TIM3_ARR 200-1
-#define TIM1_ARR 3500
 #define TIM6_ARR 1000-1
+#define TIM3_ARR 1000-1
+#define TIM1_ARR 3500
+#define TIM7_ARR 200-1
 #define SPI1_CS_Pin GPIO_PIN_4
 #define SPI1_CS_GPIO_Port GPIOC
 #define LED_Pin GPIO_PIN_0

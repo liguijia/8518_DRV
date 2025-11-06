@@ -1,8 +1,8 @@
 #include "encoder.h"
 #include <stdlib.h> // for malloc/free
 
-Encoder_HandleTypeDef kth7823_encoder;
-Encoder_HandleTypeDef mt6709_encoder;
+Encoder_HandleTypeDef rotor_encoder;
+Encoder_HandleTypeDef output_encoder;
 
 /**
  * @brief 注册并初始化编码器

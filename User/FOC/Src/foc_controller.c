@@ -53,7 +53,7 @@ void FOC_CurrentLoop_Update(FOC_Controller_t *foc) {
 
   // 读取编码器角度
   // 注意：如果您的电流环执行频率极高，此处的SPI读取可能会造成延时，应考虑将角度读取放在定时器更新中断中。
-  if (Encoder_ReadAngle(&kth7823_encoder, &foc->pos_now_deg) != ENCODER_OK)
+  if (Encoder_ReadAngle(&rotor_encoder, &foc->pos_now_deg) != ENCODER_OK)
     return;
 
   // 1. 转成机械弧度 (0..2π)
@@ -103,7 +103,7 @@ void FOC_PLLSpeedLoop_Update(FOC_Controller_t *foc) {
 void FOC_PositionLoop_Update(FOC_Controller_t *foc) {
   if (!foc)
     return;
-  if (Encoder_ReadAngle(&kth7823_encoder, &foc->pos_out_deg) != ENCODER_OK)
+  if (Encoder_ReadAngle(&output_encoder, &foc->pos_out_deg) != ENCODER_OK)
     return;
 
   /* 单圈最短路径误差 */

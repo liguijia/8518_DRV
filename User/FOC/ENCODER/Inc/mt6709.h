@@ -36,7 +36,7 @@ typedef struct {
   GPIO_TypeDef *cs_port;   // 片选端口（CubeMX 已配置，如 GPIOA）
   uint16_t cs_pin; // 片选引脚（CubeMX 已配置，如 GPIO_PIN_4）
 
-  uint16_t angle_raw; // 17位原始角度值（0~131071，手册6.1章节）
+  uint32_t angle_raw; // 17位原始角度值（0~131071，手册6.1章节）
   float angle_deg; // 转换后角度（0~360°，手册公式：θ=ANGLE/2¹⁷×360）
   int16_t temp_c; // 芯片温度（℃，手册7.4.3温度计算公式）
   uint8_t cal_state; // 校准状态（0=未校准，1=校准中，2=校准失败，3=校准成功）
@@ -65,7 +65,7 @@ uint8_t MT6709_Init(MT6709_HandleTypeDef *hdev, SPI_HandleTypeDef *hspi,
  * @param angle_raw: 输出原始角度（0~131071）
  * @retval MT6709_OK/MT6709_ERROR/MT6709_TIMEOUT
  */
-uint8_t MT6709_ReadRaw(MT6709_HandleTypeDef *hdev, uint16_t *angle_raw);
+uint8_t MT6709_ReadRaw(MT6709_HandleTypeDef *hdev, uint32_t *angle_raw);
 
 /**
  * @brief 读取角度（0~360°）和芯片温度

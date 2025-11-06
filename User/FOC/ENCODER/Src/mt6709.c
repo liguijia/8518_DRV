@@ -1,4 +1,6 @@
 #include "mt6709.h"
+#include "bsp_delay.h"
+#include "stm32g4xx_hal.h"
 #include <string.h>
 
 /* ----------------- 私有工具函数 ----------------- */
@@ -8,7 +10,6 @@
  */
 static inline void MT6709_CS_Enable(MT6709_HandleTypeDef *hdev) {
   HAL_GPIO_WritePin(hdev->cs_port, hdev->cs_pin, GPIO_PIN_RESET);
-  HAL_Delay(1); // 满足 CSN 下降沿到 SCK 上升沿的最小延时（100ns，手册表17）
 }
 
 static inline void MT6709_CS_Disable(MT6709_HandleTypeDef *hdev) {
@@ -26,17 +27,23 @@ static uint8_t MT6709_SPI_Transfer16(MT6709_HandleTypeDef *hdev,
                                      uint16_t tx_word, uint16_t *rx_word) {
   uint8_t tx[2] = {0}, rx[2] = {0};
 
-  // 拆分 16 位数据为高8位+低8位（MSB先发，手册7.4.2）
+  // 1. 拆分 16 位数据为高8位+低8位（MSB先发，符合MT6709协议）
   tx[0] = (uint8_t)((tx_word >> 8) & 0xFF);
   tx[1] = (uint8_t)(tx_word & 0xFF);
 
-  // 调用 HAL SPI 收发函数（CubeMX 已初始化 SPI 参数）
-  if (HAL_SPI_TransmitReceive(hdev->hspi, tx, rx, 2, MT6709_SPI_TIMEOUT_MS) !=
-      HAL_OK) {
+  // --- Phase 1: 发送命令 (Transmit) ---
+  // 发送 2 字节（16 位）。
+  if (HAL_SPI_Transmit(hdev->hspi, tx, 2, MT6709_SPI_TIMEOUT_MS) != HAL_OK) {
+    return MT6709_TIMEOUT;
+  }
+  BSP_Delay_ns(500);
+  // --- Phase 2: 接收响应 (Receive) ---
+  // HAL 库在此处会处理数据线方向切换，并发出 2 字节时钟，接收 2 字节数据。
+  if (HAL_SPI_Receive(hdev->hspi, rx, 2, MT6709_SPI_TIMEOUT_MS) != HAL_OK) {
     return MT6709_TIMEOUT;
   }
 
-  // 重组接收数据为 16 位
+  // 2. 重组接收数据为 16 位（MSB先接收）
   *rx_word = (uint16_t)(((uint16_t)rx[0] << 8) | rx[1]);
   return MT6709_OK;
 }
@@ -69,35 +76,49 @@ static uint8_t MT6709_UnlockRegisters(MT6709_HandleTypeDef *hdev) {
 
 /* ----------------- 寄存器读写实现 ----------------- */
 
+/**
+ * @brief 读取 8 位寄存器值（响应字 D[11:4]）
+ */
 uint8_t MT6709_ReadRegister(MT6709_HandleTypeDef *hdev, uint8_t reg_addr,
                             uint8_t *reg_value) {
   if (hdev == NULL || reg_value == NULL)
     return MT6709_ERROR;
 
   uint16_t cmd = 0, rx_word = 0;
-  // SPI 读命令格式（手册表18）：
-  // Bit15=1（读操作），Bit14-12=000（固定），Bit11-4=寄存器地址，Bit3-0=0（读1字无安全字）
+  // SPI 读命令格式：Bit15=1, Bit14-12=000, Bit11-4=寄存器地址, Bit3-0=0x00
+  // 读寄存器时，D[11:4] 携带地址
   cmd = (0x01 << 15) | ((uint16_t)(reg_addr & 0xFF) << 4) | 0x00;
 
   MT6709_CS_Enable(hdev);
+  // 使用纯收发函数 (16位)
   uint8_t ret = MT6709_SPI_Transfer16(hdev, cmd, &rx_word);
   MT6709_CS_Disable(hdev);
 
   if (ret != MT6709_OK)
     return ret;
-  // 寄存器值存储在接收数据的 Bit11-4（手册表18）
-  *reg_value = (uint8_t)((rx_word >> 4) & 0xFF);
+
+  // 寄存器值存储在接收数据的 Bit11-4（手册表18），提取 8 位值
+  *reg_value = (uint8_t)((rx_word >> 4) & 0xFF); // CORRECTED: 提取 D[11:4]
   return MT6709_OK;
 }
 
+/**
+ * @brief 写入 8 位寄存器值
+ */
 uint8_t MT6709_WriteRegister(MT6709_HandleTypeDef *hdev, uint8_t reg_addr,
                              uint8_t reg_value) {
   if (hdev == NULL)
     return MT6709_ERROR;
 
   uint16_t cmd = 0, rx_word = 0;
-  // SPI 写命令格式（手册表18）：
-  // Bit15=0（写操作），Bit14-12=000（固定），Bit11-4=寄存器地址，Bit3-0=0（写1字无安全字）
+
+  // SPI 写命令格式：
+  // Bit15=0（写操作）
+  // Bit14-12=000（固定）
+  // Bit11-4=寄存器地址 (reg_addr & 0xFF)
+  // Bit3-0=数据 LSB (reg_value & 0x0F)
+
+  // 写命令 D[3:0] 放置要写入的 4 位数据 LSB (遵循手册表18的典型写格式)
   cmd = (0x00 << 15) | ((uint16_t)(reg_addr & 0xFF) << 4) |
         ((uint16_t)(reg_value & 0x0F) << 0);
 
@@ -108,12 +129,14 @@ uint8_t MT6709_WriteRegister(MT6709_HandleTypeDef *hdev, uint8_t reg_addr,
   if (ret != MT6709_OK)
     return ret;
 
-  // 验证写入结果（延时 5ms 确保 EEPROM 写入完成，手册12章版本信息）
-  HAL_Delay(5);
+  // 验证写入结果 (已移除 HAL_Delay)
   uint8_t read_back = 0;
   if (MT6709_ReadRegister(hdev, reg_addr, &read_back) != MT6709_OK)
     return MT6709_ERROR;
-  if (read_back != reg_value)
+
+  // CORRECTED: 修正校验逻辑。由于写命令只写入了 4 位数据 LSB
+  // (D[3:0])，因此只校验低 4 位是否一致
+  if ((read_back & 0x0F) != (reg_value & 0x0F))
     return MT6709_ERROR;
 
   return MT6709_OK;
@@ -121,7 +144,7 @@ uint8_t MT6709_WriteRegister(MT6709_HandleTypeDef *hdev, uint8_t reg_addr,
 
 /* ----------------- 角度读取实现 ----------------- */
 
-uint8_t MT6709_ReadRaw(MT6709_HandleTypeDef *hdev, uint16_t *angle_raw) {
+uint8_t MT6709_ReadRaw(MT6709_HandleTypeDef *hdev, uint32_t *angle_raw) {
   if (hdev == NULL || angle_raw == NULL)
     return MT6709_ERROR;
 
@@ -152,7 +175,7 @@ uint8_t MT6709_ReadRaw(MT6709_HandleTypeDef *hdev, uint16_t *angle_raw) {
 
 uint8_t MT6709_ReadAngle(MT6709_HandleTypeDef *hdev, float *angle_deg,
                          int16_t *temp_c) {
-  uint16_t raw = 0;
+  uint32_t raw = 0;
 
   // 读取原始角度（17位，0~131071）
   if (MT6709_ReadRaw(hdev, &raw) != MT6709_OK) {
@@ -307,7 +330,7 @@ uint8_t MT6709_Init(MT6709_HandleTypeDef *hdev, SPI_HandleTypeDef *hspi,
   MT6709_CS_Disable(hdev);
 
   // 3. 验证 SPI 通信（读取原始角度判断设备是否响应，手册7.4.3）
-  uint16_t raw = 0;
+  uint32_t raw = 0;
   if (MT6709_ReadRaw(hdev, &raw) != MT6709_OK) {
     return MT6709_ERROR;
   }

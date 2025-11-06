@@ -46,8 +46,8 @@ typedef struct {
 } Encoder_HandleTypeDef;
 
 /*  全局编码器句柄实例 */
-extern Encoder_HandleTypeDef kth7823_encoder;
-extern Encoder_HandleTypeDef mt6709_encoder;
+extern Encoder_HandleTypeDef rotor_encoder;
+extern Encoder_HandleTypeDef output_encoder;
 /* ========== 外部接口函数 ========== */
 
 /**

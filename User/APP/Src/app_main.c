@@ -9,6 +9,7 @@
 #include "analog_signal.h"
 #include "app_main.h"
 #include "bsp_can.h"
+#include "bsp_delay.h"
 #include "bsp_flash.h"
 #include "bsp_led.h"
 #include "bsp_pwm.h"
@@ -19,6 +20,7 @@
 #include "kth7823.h"
 #include "motor_config.h"
 #include "ramp_control.h"
+
 // 6020test
 #include "gm6020_ctrl.h"
 GM6020_Handle_t gm6020_motor1, gm6020_motor5;
@@ -30,7 +32,6 @@ float gm6020_test = 100.0f;
 // test
 
 //
-KTH7823_HandleTypeDef henc1;
 FOC_Controller_t foc;
 //
 FOC_OpenLoop_t openloop;
@@ -57,14 +58,16 @@ float current_speed_ref = 0.0f; // 实际 FOC 速度环参考值
 */
 void App_Main_Init(void) {
   // 初始化外设
+  BSP_Delay_Init(&htim17);
   BSP_FDCAN_Init();
   BSP_Flash_Init();
   // KTH7823_Init(&henc1, &hspi1, SPI1_CS_GPIO_Port, SPI1_CS_Pin, 0,
   // KTH7823_CW);
 
-  Encoder_Register_Init(&kth7823_encoder, ENCODER_TYPE_KTH7823, &hspi1,
-                        SPI1_CS_GPIO_Port, SPI1_CS_Pin, 0xFFFF,
-                        KTH7823_CW); // 0xFFFF 表示跳过写入零点
+  Encoder_Register_Init(&rotor_encoder, ENCODER_TYPE_KTH7823, &hspi1,
+                        SPI1_CS_GPIO_Port, SPI1_CS_Pin, 0xFFFF, KTH7823_CW);
+  Encoder_Register_Init(&output_encoder, ENCODER_TYPE_MT6709, &hspi3,
+                        SPI3_CS_GPIO_Port, SPI3_CS_Pin, 0xFFFF, MT6709_CW);
   AnalogSignal_Process_Init();
   //
   GM6020_Init(&gm6020_motor1, 1, gm6020_can_send); // ID1，注册发送回调
@@ -81,7 +84,7 @@ void App_Main_Init(void) {
                                  .output_limit = 600.0f, // 最大输出转速600rpm
                                  .integral_limit = 50.0f};
   GM6020_SetPIDParams(&gm6020_motor1, &speed_pid, &pos_pid);
-  GM6020_SetMode(&gm6020_motor1, GM6020_MODE_POSITION);
+  GM6020_SetMode(&gm6020_motor1, GM6020_MODE_SPEED);
   GM6020_ManagerInit(motors, 1);
   //
   BSP_PWM_Init();
@@ -99,26 +102,32 @@ void App_Main_Init(void) {
   //
   BSP_PWM_Start();
   HAL_TIM_Base_Start_IT(&htim6);
-  HAL_TIM_Base_Start_IT(&htim3);
+  HAL_TIM_Base_Start_IT(&htim7);
   //
   BSP_BreathLED_Init();
+  BSP_LED_Status(LED_FLASH_SLOW);
 }
-
+uint16_t output_angle_deg;
 /*
   应用主循环函数
 */
 void App_Main_Loop(void) {
   // 设置一个固定的 iq 参考值用于测试
   // FOC_Controller_SetIdIq(&foc, test_id, test_iq);
-  BSP_LED_Status(LED_ON);
-  HAL_Delay(100);
-  BSP_LED_Status(LED_OFF);
-  HAL_Delay(100);
+  // 出轴编码器读取
+
+  Encoder_ReadRaw(&output_encoder, &output_angle_deg);
 }
-/*
-  定时器中断回调函数
-*/
+/**
+ * @brief  定时器中断回调函数
+ * @retval TIM3: 用于LED状态指示
+ * @retval TIM6: 用于位置环更新
+ * @retval TIM7: 用于速度环更新
+ */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
+  if (htim->Instance == TIM3) {
+    BSP_LED_Update();
+  }
   if (htim->Instance == TIM6) {
     // FOC_Controller_SetPosition(&foc, test_pos);
     // FOC_PositionLoop_Update(&foc);
@@ -126,7 +135,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
     GM6020_PIDCalculate();
     GM6020_SendAll();
   }
-  if (htim->Instance == TIM3) {
+  if (htim->Instance == TIM7) {
     if (speed_ramp.target_value != test_speed) {
       speed_ramp.target_value = test_speed;
     }
