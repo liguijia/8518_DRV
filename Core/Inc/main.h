@@ -65,8 +65,12 @@ void Error_Handler(void);
 #define SPI1_CS_GPIO_Port GPIOC
 #define LED_Pin GPIO_PIN_0
 #define LED_GPIO_Port GPIOB
-#define SPI3_CS_Pin GPIO_PIN_12
-#define SPI3_CS_GPIO_Port GPIOB
+#define SPISIM_CS_Pin GPIO_PIN_12
+#define SPISIM_CS_GPIO_Port GPIOB
+#define SPISIM_SCK_Pin GPIO_PIN_3
+#define SPISIM_SCK_GPIO_Port GPIOB
+#define SPISIM_MOSI_Pin GPIO_PIN_5
+#define SPISIM_MOSI_GPIO_Port GPIOB
 #define CAN_RES_Pin GPIO_PIN_9
 #define CAN_RES_GPIO_Port GPIOB
 

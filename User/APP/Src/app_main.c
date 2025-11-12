@@ -20,7 +20,15 @@
 #include "kth7823.h"
 #include "motor_config.h"
 #include "ramp_control.h"
-
+//
+#include "mt6709_gpiosim.h"
+static const MT6709_GPIOConfig_t mt6709_io = {.cs_port = SPISIM_CS_GPIO_Port,
+                                              .cs_pin = SPISIM_CS_Pin,
+                                              .sck_port = SPISIM_SCK_GPIO_Port,
+                                              .sck_pin = SPISIM_SCK_Pin,
+                                              .sdat_port =
+                                                  SPISIM_MOSI_GPIO_Port,
+                                              .sdat_pin = SPISIM_MOSI_Pin};
 // 6020test
 #include "gm6020_ctrl.h"
 GM6020_Handle_t gm6020_motor1, gm6020_motor5;
@@ -66,9 +74,8 @@ void App_Main_Init(void) {
 
   Encoder_Register_Init(&rotor_encoder, ENCODER_TYPE_KTH7823, &hspi1,
                         SPI1_CS_GPIO_Port, SPI1_CS_Pin, 0xFFFF, KTH7823_CW);
-  Encoder_Register_Init(&output_encoder, ENCODER_TYPE_MT6709, &hspi3,
-                        SPI3_CS_GPIO_Port, SPI3_CS_Pin, 0xFFFF, MT6709_CW);
   AnalogSignal_Process_Init();
+  MT6709_GPIO_Init(&mt6709_io);
   //
   GM6020_Init(&gm6020_motor1, 1, gm6020_can_send); // ID1，注册发送回调
 
@@ -107,16 +114,13 @@ void App_Main_Init(void) {
   BSP_BreathLED_Init();
   BSP_LED_Status(LED_FLASH_SLOW);
 }
-uint16_t output_angle_deg;
+float angle = 0.0f;
 /*
   应用主循环函数
 */
 void App_Main_Loop(void) {
   // 设置一个固定的 iq 参考值用于测试
   // FOC_Controller_SetIdIq(&foc, test_id, test_iq);
-  // 出轴编码器读取
-
-  Encoder_ReadRaw(&output_encoder, &output_angle_deg);
 }
 /**
  * @brief  定时器中断回调函数
@@ -127,10 +131,13 @@ void App_Main_Loop(void) {
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
   if (htim->Instance == TIM3) {
     BSP_LED_Update();
+    angle = MT6709_ReadAngleDeg();
   }
   if (htim->Instance == TIM6) {
     // FOC_Controller_SetPosition(&foc, test_pos);
     // FOC_PositionLoop_Update(&foc);
+    // 出轴编码器读取
+    //
     GM6020_SetTarget(&gm6020_motor1, gm6020_test);
     GM6020_PIDCalculate();
     GM6020_SendAll();
