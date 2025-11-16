@@ -30,7 +30,7 @@ void Park(const alpha_beta_t *i_alpha_beta, float theta_e, dq_t *i_dq) {
   // float s = arm_sin_f32( theta_e );
 
   i_dq->d = i_alpha_beta->alpha * c + i_alpha_beta->beta * s;
-  i_dq->q = -i_alpha_beta->alpha * s + i_alpha_beta->beta * c;
+  i_dq->q = i_alpha_beta->alpha * s + i_alpha_beta->beta * c;
 }
 
 void InvPark(const dq_t *i_dq, float theta_e, alpha_beta_t *i_alpha_beta) {

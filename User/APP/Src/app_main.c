@@ -29,6 +29,21 @@ static const MT6709_GPIOConfig_t mt6709_io = {.cs_port = SPISIM_CS_GPIO_Port,
                                               .sdat_port =
                                                   SPISIM_MOSI_GPIO_Port,
                                               .sdat_pin = SPISIM_MOSI_Pin};
+MT6709_MultiReadResult_t res;
+/**
+ * @brief 将角度差归一化到 [-180, +180) 度区间
+ * @param diff_deg 原始角度差（单位：度）
+ * @return 归一化后的角度差
+ */
+static inline float NormalizeAngleDiff(float diff_deg) {
+  while (diff_deg > 180.0f) {
+    diff_deg -= 360.0f;
+  }
+  while (diff_deg <= -180.0f) {
+    diff_deg += 360.0f;
+  }
+  return diff_deg;
+}
 // 6020test
 #include "gm6020_ctrl.h"
 GM6020_Handle_t gm6020_motor1, gm6020_motor5;
@@ -36,7 +51,7 @@ GM6020_Handle_t *motors[] = {&gm6020_motor1, &gm6020_motor5}; // 电机数组
 static void gm6020_can_send(uint16_t id, uint8_t *data) {
   BSP_FDCAN_SendMsg(id, data); // 注册现有CAN发送函数
 }
-float gm6020_test = 100.0f;
+float gm6020_test = -100.0f;
 // test
 
 //
@@ -46,7 +61,7 @@ FOC_OpenLoop_t openloop;
 //
 
 // 测试用的参考值
-float test_iq = 0.0f;
+float test_iq = 2.0f;
 float test_id = 0.0f;
 float test_speed = 100.0f;
 float test_pos = 100.0f;
@@ -99,12 +114,11 @@ void App_Main_Init(void) {
   // 初始化 FOC 控制器
   FOC_Controller_Init(&foc, FOC_DT_CURRENT, FOC_DT_SPEED, FOC_DT_POSITION);
   //
-  RampFunction_Init(&speed_ramp, 0.0f, 0.0f, 750.0f, RAMP_TYPE_LINEAR);
+  RampFunction_Init(&speed_ramp, 0.0f, 0.0f, 250.0f, RAMP_TYPE_LINEAR);
 
   // 自校准
   // FOC_SelfCalib_Init(&calib_handle, &calib_cfg);
   // FOC_SelfCalib_Execute(&foc, &calib_handle);
-
   foc.status = FOC_STATE_READY;
   //
   BSP_PWM_Start();
@@ -115,6 +129,8 @@ void App_Main_Init(void) {
   BSP_LED_Status(LED_FLASH_SLOW);
 }
 float angle = 0.0f;
+float gm6020_angle = 0.0f;
+float delta_angle = 0.0f;
 /*
   应用主循环函数
 */
@@ -131,12 +147,15 @@ void App_Main_Loop(void) {
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
   if (htim->Instance == TIM3) {
     BSP_LED_Update();
-    angle = MT6709_ReadAngleDeg();
+    // angle = MT6709_ReadAngleDeg();
+    res = MT6709_ReadMulti(0x01);
+    gm6020_angle = -gm6020_motor1.feedback.angle * 360.f / 8191;
+    float raw_diff = res.angle_deg - gm6020_angle;
+    delta_angle = NormalizeAngleDiff(raw_diff);
   }
   if (htim->Instance == TIM6) {
     // FOC_Controller_SetPosition(&foc, test_pos);
     // FOC_PositionLoop_Update(&foc);
-    // 出轴编码器读取
     //
     GM6020_SetTarget(&gm6020_motor1, gm6020_test);
     GM6020_PIDCalculate();
@@ -149,5 +168,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
     current_speed_ref = RampFunction_Update(&speed_ramp, FOC_DT_SPEED);
     FOC_Controller_SetSpeed(&foc, current_speed_ref); // 设置一个初始速度参考值
     FOC_PLLSpeedLoop_Update(&foc);
+    FOC_Controller_SetIdIq(&foc, 0.0f, test_iq);
   }
 }

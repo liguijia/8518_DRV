@@ -32,9 +32,9 @@ void FOC_Controller_Init(FOC_Controller_t *foc, float dt_current,
 
   // 电流环 PID
   FOC_PID_Init(&foc->id_pid, FOC_PID_TYPE_PI, 0.0f, 0.0f, 0.0f, dt_current,
-               5.0f, 5.0f, 0.001f);
-  FOC_PID_Init(&foc->iq_pid, FOC_PID_TYPE_PI, 0.08750f, 0.075f, 0.0f,
-               dt_current, 10.0f, 50.0f, 0.001f);
+               20.0f, 180.0f, 0.0005f);
+  FOC_PID_Init(&foc->iq_pid, FOC_PID_TYPE_PI, 0.25f, 0.05f, 0.0f, dt_current,
+               20.0f, 180.0f, 0.0005f);
   // 速度环 PLL
   PLL_Init(&foc->speed_pll, 27.5f, 12.5f, dt_speed);
   // 速度环 PID
@@ -68,7 +68,6 @@ void FOC_CurrentLoop_Update(FOC_Controller_t *foc) {
 
   // 4. 归一化电角度 (0..2π)
   foc->theta_e = norm_rad(elec_rad);
-
   // 5. 调用电流环控制算法
   // foc->theta_e 现在是经过零点修正的准确电角度
   FOC_UpdatePWM(foc);
@@ -89,8 +88,8 @@ void FOC_PLLSpeedLoop_Update(FOC_Controller_t *foc) {
   foc->speed_now_rpm = speed_rad_s * 60.0f / (2.0f * M_PI);
 
   // --- PID 控制 ---
-  foc->iq_ref =
-      FOC_PID_Compute(&foc->speed_pid, foc->speed_ref, foc->speed_now_rpm);
+  // foc->iq_ref =
+  //     FOC_PID_Compute(&foc->speed_pid, foc->speed_ref, foc->speed_now_rpm);
 
   // 限幅 iq_ref
   if (foc->iq_ref > MOTOR_MAX_CURRENT)

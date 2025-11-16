@@ -1,6 +1,5 @@
 #include "mt6709_gpiosim.h"
-#include "stm32g4xx_hal.h" // 包含用于 __NOP()
-
+#include "bsp_delay.h"
 static MT6709_GPIOConfig_t g_cfg;
 
 /**
@@ -48,13 +47,7 @@ static inline void sdat_input(void) {
  * TSCKL/TSCKH (高/低电平时间) 最小 50ns。
  * 在高速 MCU (如 170MHz) 上, 几个 NOPs 是必要的。
  */
-static inline void spi_delay(void) {
-  __NOP();
-  __NOP();
-  __NOP();
-  __NOP();
-  __NOP();
-}
+static inline void spi_delay(void) { BSP_Delay_ns(75); }
 
 /**
  * @brief (已修正) 发送 16-bit 数据 (SPI Mode 1)
@@ -94,7 +87,6 @@ static uint16_t recv_16bit(void) {
     // 1. 在上升沿改变数据 (由从机完成)
     g_cfg.sck_port->BSRR = g_cfg.sck_pin; // SCK High
     spi_delay();                          // 保持 TSCKH (min 50ns)
-
     // 2. 在下降沿采样数据 (由主机完成)
     g_cfg.sck_port->BSRR = (uint32_t)g_cfg.sck_pin << 16U; // SCK Low
 
@@ -141,7 +133,6 @@ uint32_t MT6709_ReadRawAngle(void) {
   g_cfg.cs_port->BSRR = g_cfg.cs_pin; // CS High
 
   spi_delay(); // 确保 CSN 保持高电平 (满足 TLATCH > 1us)
-  spi_delay();
 
   // SPI 事务 2: 读取寄存器 0x02 (ANGLE[0])
   g_cfg.cs_port->BSRR = (uint32_t)g_cfg.cs_pin << 16U; // CS Low
@@ -164,4 +155,54 @@ float MT6709_ReadAngleDeg(void) {
   // 17-bit 分辨率 (2^17 = 131072)
   // 角度 = (raw / 2^17) * 360
   return (float)raw * 360.0f / 131072.0f;
+}
+
+/**
+ * @brief 使用 Range=2 模式读取多个寄存器（0x01, 0x02, Safety Word）
+ * @param reg_addr 起始寄存器地址（通常为 0x01）
+ * @return 结构体包含角度、温度、安全字
+ */
+MT6709_MultiReadResult_t MT6709_ReadMulti(uint8_t reg_addr) {
+  MT6709_MultiReadResult_t result = {0};
+
+  uint16_t cmd = (0x8000 | (reg_addr << 4)) | 0x04; // Range=2
+
+  g_cfg.cs_port->BSRR = (uint32_t)g_cfg.cs_pin << 16U; // CS Low
+  send_16bit(cmd);
+
+  uint16_t data1 = recv_16bit();           // Reg 0x01
+  uint16_t data2 = recv_16bit();           // Reg 0x02
+  uint16_t safety_word_raw = recv_16bit(); // Safety Word
+
+  g_cfg.cs_port->BSRR = g_cfg.cs_pin; // CS High
+
+  // --- 解析角度 ---
+  uint32_t angle_raw = ((uint32_t)data1 << 1) | ((data2 >> 15) & 1U);
+  result.angle_deg = (float)angle_raw * 360.0f / 131072.0f;
+
+  // --- 解析温度 ---
+  uint16_t ts_code = data2 & 0x07FF;     // 取 bit[10:0]
+  uint8_t ts_high = (ts_code >> 10) & 1; // bit10
+  uint16_t ts_low = ts_code & 0x3FF;     // bit9~0
+  result.temperature_c = 27.0f + (ts_high * 256.0f - ts_low * 0.25f);
+
+  // --- 解析 Safety Word ---
+  result.safety_word.diag_stat = (safety_word_raw >> 12) & 0x0F;
+  result.safety_word.customer_id = (safety_word_raw >> 8) & 0x0F;
+  result.safety_word.crc = safety_word_raw & 0xFF;
+
+  // --- 直接解析 DIAG_STAT 报警位 ---
+  result.safety_word.diag_flags.signal_error =
+      (result.safety_word.diag_stat & (1U << 0)) != 0; // S[12]
+  result.safety_word.diag_flags.speed_or_cal_error =
+      (result.safety_word.diag_stat & (1U << 1)) != 0; // S[13]
+  result.safety_word.diag_flags.eeprom_error =
+      (result.safety_word.diag_stat & (1U << 2)) != 0; // S[14]
+  result.safety_word.diag_flags.under_voltage =
+      (result.safety_word.diag_stat & (1U << 3)) != 0; // S[15]
+
+  // --- 可选：对 CUSTOMER_ID 做合理性检查（例如非全0/全F）---
+  // 这里不做强制处理，仅保留原始值供上层判断
+
+  return result;
 }

@@ -11,7 +11,7 @@
 #define MOTOR_TORQUE_CONST 0.152f        // 转矩常数 (Nm/A)
 #define MOTOR_MAX_CURRENT 180.0f         // 最大电流 (A)
 #define MOTOR_MAX_VOLTAGE 24.0f          // 最大电压 (V)
-
+#define MOTOR_REDUCTION_RATIO 14.4375f   // 减速比
 /* ----------------- FOC 控制参数 ----------------- */
 #define FOC_DT_CURRENT 0.0000417f // 电流环 24 kHz
 #define FOC_DT_SPEED 0.0001f      // 速度环周期 5 kHz
