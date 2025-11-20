@@ -16,8 +16,8 @@ typedef enum {
 extern TIM_HandleTypeDef htim3;
 
 // 呼吸灯参数（可根据需求调整）
-#define BREATH_PERIOD_MS 1000  // 呼吸周期（2秒）
-#define BREATH_STEP 1          // 亮度步进值
+#define BREATH_PERIOD_MS 5000  // 呼吸周期（2秒）
+#define BREATH_STEP 2          // 亮度步进值
 #define FLASH_FAST_PERIOD 500  // 快闪周期（500ms）
 #define FLASH_SLOW_PERIOD 2000 // 慢闪周期（1000ms）
 

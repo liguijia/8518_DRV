@@ -61,10 +61,10 @@ FOC_OpenLoop_t openloop;
 //
 
 // 测试用的参考值
-float test_iq = 2.0f;
+float test_iq = -2.0f;
 float test_id = 0.0f;
-float test_speed = 100.0f;
-float test_pos = 100.0f;
+float test_speed = 800.0f;
+float test_pos = 0.0f;
 // 自校准句柄和配置
 FOC_SelfCalib_Handle_t calib_handle;
 FOC_SelfCalib_Config_t calib_cfg = {
@@ -84,8 +84,6 @@ void App_Main_Init(void) {
   BSP_Delay_Init(&htim17);
   BSP_FDCAN_Init();
   BSP_Flash_Init();
-  // KTH7823_Init(&henc1, &hspi1, SPI1_CS_GPIO_Port, SPI1_CS_Pin, 0,
-  // KTH7823_CW);
 
   Encoder_Register_Init(&rotor_encoder, ENCODER_TYPE_KTH7823, &hspi1,
                         SPI1_CS_GPIO_Port, SPI1_CS_Pin, 0xFFFF, KTH7823_CW);
@@ -137,6 +135,9 @@ float delta_angle = 0.0f;
 void App_Main_Loop(void) {
   // 设置一个固定的 iq 参考值用于测试
   // FOC_Controller_SetIdIq(&foc, test_id, test_iq);
+  res = MT6709_ReadMulti(0x01);
+  float raw_diff = res.angle_deg - gm6020_angle;
+  delta_angle = NormalizeAngleDiff(raw_diff);
 }
 /**
  * @brief  定时器中断回调函数
@@ -147,27 +148,25 @@ void App_Main_Loop(void) {
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
   if (htim->Instance == TIM3) {
     BSP_LED_Update();
-    // angle = MT6709_ReadAngleDeg();
-    res = MT6709_ReadMulti(0x01);
-    gm6020_angle = -gm6020_motor1.feedback.angle * 360.f / 8191;
-    float raw_diff = res.angle_deg - gm6020_angle;
-    delta_angle = NormalizeAngleDiff(raw_diff);
   }
   if (htim->Instance == TIM6) {
+
+    //
     // FOC_Controller_SetPosition(&foc, test_pos);
     // FOC_PositionLoop_Update(&foc);
     //
-    GM6020_SetTarget(&gm6020_motor1, gm6020_test);
-    GM6020_PIDCalculate();
-    GM6020_SendAll();
+    // gm6020_angle = -gm6020_motor1.feedback.angle * 360.f / 8191;
+    // GM6020_SetTarget(&gm6020_motor1, gm6020_test);
+    // GM6020_PIDCalculate();
+    // GM6020_SendAll();
   }
   if (htim->Instance == TIM7) {
     if (speed_ramp.target_value != test_speed) {
       speed_ramp.target_value = test_speed;
     }
     current_speed_ref = RampFunction_Update(&speed_ramp, FOC_DT_SPEED);
-    FOC_Controller_SetSpeed(&foc, current_speed_ref); // 设置一个初始速度参考值
+    // 设置一个初始速度参考值
+    FOC_Controller_SetSpeed(&foc, current_speed_ref);
     FOC_PLLSpeedLoop_Update(&foc);
-    FOC_Controller_SetIdIq(&foc, 0.0f, test_iq);
   }
 }
